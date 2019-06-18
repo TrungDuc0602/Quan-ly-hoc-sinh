@@ -35,6 +35,18 @@
             this.tclStudent = new System.Windows.Forms.TabControl();
             this.tpHome = new System.Windows.Forms.TabPage();
             this.tpDisplayPoint = new System.Windows.Forms.TabPage();
+            this.lvShowPoint = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnChose = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cbbChoseSchoolYear = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cbbChoseTerm = new System.Windows.Forms.ComboBox();
             this.tpInformation = new System.Windows.Forms.TabPage();
             this.panel13 = new System.Windows.Forms.Panel();
             this.btEditInformation = new System.Windows.Forms.Button();
@@ -69,6 +81,7 @@
             this.panel1.SuspendLayout();
             this.panel12.SuspendLayout();
             this.tclStudent.SuspendLayout();
+            this.tpDisplayPoint.SuspendLayout();
             this.tpInformation.SuspendLayout();
             this.panel13.SuspendLayout();
             this.panel14.SuspendLayout();
@@ -105,7 +118,7 @@
             // 
             this.txbDisplayNameStudent.AutoSize = true;
             this.txbDisplayNameStudent.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txbDisplayNameStudent.Location = new System.Drawing.Point(346, 8);
+            this.txbDisplayNameStudent.Location = new System.Drawing.Point(306, 8);
             this.txbDisplayNameStudent.Name = "txbDisplayNameStudent";
             this.txbDisplayNameStudent.Size = new System.Drawing.Size(101, 16);
             this.txbDisplayNameStudent.TabIndex = 0;
@@ -114,7 +127,7 @@
             // 
             // btnLogOut
             // 
-            this.btnLogOut.Location = new System.Drawing.Point(509, 5);
+            this.btnLogOut.Location = new System.Drawing.Point(480, 5);
             this.btnLogOut.Name = "btnLogOut";
             this.btnLogOut.Size = new System.Drawing.Size(75, 23);
             this.btnLogOut.TabIndex = 5;
@@ -146,6 +159,12 @@
             // 
             // tpDisplayPoint
             // 
+            this.tpDisplayPoint.Controls.Add(this.lvShowPoint);
+            this.tpDisplayPoint.Controls.Add(this.btnChose);
+            this.tpDisplayPoint.Controls.Add(this.label2);
+            this.tpDisplayPoint.Controls.Add(this.cbbChoseSchoolYear);
+            this.tpDisplayPoint.Controls.Add(this.label1);
+            this.tpDisplayPoint.Controls.Add(this.cbbChoseTerm);
             this.tpDisplayPoint.Location = new System.Drawing.Point(4, 22);
             this.tpDisplayPoint.Name = "tpDisplayPoint";
             this.tpDisplayPoint.Padding = new System.Windows.Forms.Padding(3);
@@ -153,6 +172,105 @@
             this.tpDisplayPoint.TabIndex = 1;
             this.tpDisplayPoint.Text = "Xem điểm";
             this.tpDisplayPoint.UseVisualStyleBackColor = true;
+            // 
+            // lvShowPoint
+            // 
+            this.lvShowPoint.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4,
+            this.columnHeader5,
+            this.columnHeader6});
+            this.lvShowPoint.GridLines = true;
+            this.lvShowPoint.Location = new System.Drawing.Point(3, 40);
+            this.lvShowPoint.Name = "lvShowPoint";
+            this.lvShowPoint.Size = new System.Drawing.Size(633, 391);
+            this.lvShowPoint.TabIndex = 5;
+            this.lvShowPoint.UseCompatibleStateImageBehavior = false;
+            this.lvShowPoint.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Môn học";
+            this.columnHeader1.Width = 127;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "ĐTB";
+            this.columnHeader2.Width = 66;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Điểm miệng";
+            this.columnHeader3.Width = 70;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Điển kiếm tra 15p";
+            this.columnHeader4.Width = 97;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "Điểm kiểm tra 1 tiết";
+            this.columnHeader5.Width = 106;
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Điểm kiểm tra học kỳ";
+            this.columnHeader6.Width = 114;
+            // 
+            // btnChose
+            // 
+            this.btnChose.Location = new System.Drawing.Point(476, 4);
+            this.btnChose.Name = "btnChose";
+            this.btnChose.Size = new System.Drawing.Size(75, 23);
+            this.btnChose.TabIndex = 4;
+            this.btnChose.Text = "Xem";
+            this.btnChose.UseVisualStyleBackColor = true;
+            this.btnChose.Click += new System.EventHandler(this.btnChose_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(247, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Năm học:";
+            // 
+            // cbbChoseSchoolYear
+            // 
+            this.cbbChoseSchoolYear.FormattingEnabled = true;
+            this.cbbChoseSchoolYear.Items.AddRange(new object[] {
+            "2016-2017",
+            "2017-2018",
+            "2018-2019"});
+            this.cbbChoseSchoolYear.Location = new System.Drawing.Point(305, 6);
+            this.cbbChoseSchoolYear.Name = "cbbChoseSchoolYear";
+            this.cbbChoseSchoolYear.Size = new System.Drawing.Size(80, 21);
+            this.cbbChoseSchoolYear.TabIndex = 2;
+            this.cbbChoseSchoolYear.Text = "2016-2017";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(76, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(44, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Học kỳ:";
+            // 
+            // cbbChoseTerm
+            // 
+            this.cbbChoseTerm.FormattingEnabled = true;
+            this.cbbChoseTerm.Items.AddRange(new object[] {
+            "1",
+            "2"});
+            this.cbbChoseTerm.Location = new System.Drawing.Point(126, 6);
+            this.cbbChoseTerm.Name = "cbbChoseTerm";
+            this.cbbChoseTerm.Size = new System.Drawing.Size(42, 21);
+            this.cbbChoseTerm.TabIndex = 0;
             // 
             // tpInformation
             // 
@@ -450,6 +568,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(656, 503);
             this.Controls.Add(this.panel1);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.Name = "fTableManager";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Phần mềm quản lý học sinh";
@@ -457,6 +576,8 @@
             this.panel12.ResumeLayout(false);
             this.panel12.PerformLayout();
             this.tclStudent.ResumeLayout(false);
+            this.tpDisplayPoint.ResumeLayout(false);
+            this.tpDisplayPoint.PerformLayout();
             this.tpInformation.ResumeLayout(false);
             this.panel13.ResumeLayout(false);
             this.panel14.ResumeLayout(false);
@@ -521,5 +642,17 @@
         private System.Windows.Forms.TextBox txbCodeStudent;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label txbDisplayNameStudent;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cbbChoseSchoolYear;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cbbChoseTerm;
+        private System.Windows.Forms.Button btnChose;
+        private System.Windows.Forms.ListView lvShowPoint;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
     }
 }

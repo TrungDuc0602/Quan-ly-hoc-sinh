@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -143,8 +145,8 @@ namespace QuanLyHocSinh.DTO
             this.NgaySinh = (DateTime)data.Rows[0][3];
             this.NoiSinh = data.Rows[0].ItemArray[4].ToString();
             this.DiaChi = data.Rows[0].ItemArray[5].ToString();
-            this.MaDanToc = data.Rows[0].ItemArray[10].ToString();
-            this.MaTonGiao = data.Rows[0].ItemArray[12].ToString();
+            this.MaDanToc = data.Rows[0].ItemArray[6].ToString();
+            this.MaTonGiao = data.Rows[0].ItemArray[7].ToString();
             this.TenNguoiThan = data.Rows[0].ItemArray[8].ToString();
         }
     }

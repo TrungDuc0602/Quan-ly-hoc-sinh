@@ -53,7 +53,6 @@ namespace QuanLyHocSinh
         }
 
 
-
         #region TrashVoid
         private void flogin_Load(object sender, EventArgs e)
         {
