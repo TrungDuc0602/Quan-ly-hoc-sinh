@@ -48,7 +48,10 @@
   <ItemGroup>
     <Compile Include="DAO\AccountDAO.cs" />
     <Compile Include="DAO\DataProvider.cs" />
+    <Compile Include="DAO\PointDAO.cs" />
     <Compile Include="DAO\StudentInformationDAO.cs" />
+    <Compile Include="DAO\UpdateInforDAO.cs" />
+    <Compile Include="DTO\Point.cs" />
     <Compile Include="DTO\StudentInformation.cs" />
     <Compile Include="fEditInformation.cs">
       <SubType>Form</SubType>

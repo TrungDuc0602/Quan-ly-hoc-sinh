@@ -15,11 +15,12 @@ namespace QuanLyHocSinh
 {
     public partial class fTableManager : Form
     {
-        public fTableManager(string str_Value)
+        public fTableManager(string str_Value)      //str_value là Mã học sinh được đưa từ fLogin qua
         {
             InitializeComponent();        
 
             loadStudentInformation(str_Value);
+          
         }
 
         void loadStudentInformation(string StudentCode)
@@ -52,7 +53,55 @@ namespace QuanLyHocSinh
 
         }
 
+        void DisplayPoint(string MaHocSinh)
+        {
+            lvShowPoint.Items.Clear();
 
+            string MaHocKy = cbbChoseTerm.SelectedItem.ToString();
+
+            string MaNamHoc = null;
+
+            if (cbbChoseSchoolYear.SelectedItem.ToString() == "2016-2017")
+                MaNamHoc = "017";
+            else
+            {
+                if (cbbChoseSchoolYear.SelectedItem.ToString() == "2017-2018")
+                    MaNamHoc = "018";
+                else
+                    MaNamHoc = "019";
+            }
+
+            DTO.Point z = new DTO.Point();
+
+            string [] item = z.GetScores(MaHocSinh, MaHocKy, MaNamHoc);
+
+            for (int i = 1; i < item.Length; i++)
+            {
+                ListViewItem lvItem = new ListViewItem(item[i++]);
+                lvItem.SubItems.Add(item[i++]);
+                lvItem.SubItems.Add(item[i++]);
+                lvItem.SubItems.Add(item[i++]);
+                lvItem.SubItems.Add(item[i++]);
+                lvItem.SubItems.Add(item[i]);
+
+                lvShowPoint.Items.Add(lvItem);
+            }
+
+            ListViewItem lvItem1 = new ListViewItem();
+            lvShowPoint.Items.Add(lvItem1);
+
+            ListViewItem lvItem2 = new ListViewItem("Điểm trung bình học kỳ");
+            lvItem2.SubItems.Add(item[0]);
+            lvShowPoint.Items.Add(lvItem2);
+
+        }
+
+        private void btnChose_Click(object sender, EventArgs e)
+        {
+            string str_Value = txbCodeStudent.Text;
+
+           DisplayPoint(str_Value);
+        }
 
 
         #region Event
@@ -68,7 +117,7 @@ namespace QuanLyHocSinh
 
         private void btEditInformation_Click(object sender, EventArgs e)
         {
-            fEditInformation f = new fEditInformation();
+            fEditInformation f = new fEditInformation(txbCodeStudent.Text);
             this.Hide();
             f.ShowDialog();
             this.Show();
@@ -103,7 +152,7 @@ namespace QuanLyHocSinh
         private void panel13_MouseDoubleClick(object sender, MouseEventArgs e)
         {
 
-        }     
+        }
 
         private void txbDisplayNameStudent_Click(object sender, EventArgs e)
         {
