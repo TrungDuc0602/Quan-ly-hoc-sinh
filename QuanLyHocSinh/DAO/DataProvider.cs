@@ -29,10 +29,7 @@ namespace QuanLyHocSinh.DAO
 
       private DataProvider() { }
 
-   //    private string connectionSTR = @"Data Source=DESKTOP-IPHSMFJ\SQL2008;Initial Catalog=QuanLyHocSinh;Integrated Security=True";   //xác định kết nối với gì
-
-       private string connectionSTR = @"Data Source=(local);Initial Catalog=QuanLyHocSinh;Integrated Security=True";   //xác định kết nối với gì
-
+        private string connectionSTR = @"Data Source=DESKTOP-IPHSMFJ\SQL2008;Initial Catalog=QuanLyHocSinh;Integrated Security=True";   //xác định kết nối với gì
 
         public DataTable ExecuteQuery(string query)
         {
