@@ -10,16 +10,17 @@ using System.Windows.Forms;
 
 namespace QuanLyHocSinh
 {
-    public partial class fEditInformation : Form
+    public partial class AdTableManager : Form
     {
-        public fEditInformation()
+        public AdTableManager(string text)
         {
             InitializeComponent();
+            this.txbDisplayNameNguoiDung.Text = text;
+
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnLogOut_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Cập nhật thông tin thành công.", "Thông báo");
             this.Close();
         }
     }

@@ -34,20 +34,20 @@
             this.txbParentName = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.panel15 = new System.Windows.Forms.Panel();
-            this.cbbReligion = new System.Windows.Forms.ComboBox();
+            this.txbReligion = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.panel16 = new System.Windows.Forms.Panel();
-            this.cbbNation = new System.Windows.Forms.ComboBox();
+            this.txbNation = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.panel17 = new System.Windows.Forms.Panel();
-            this.txbAddress = new System.Windows.Forms.TextBox();
+            this.txbAdress = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.panel18 = new System.Windows.Forms.Panel();
             this.txbNativeBorn = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.panel19 = new System.Windows.Forms.Panel();
-            this.ckbFemale = new System.Windows.Forms.CheckBox();
-            this.ckbMale = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.label14 = new System.Windows.Forms.Label();
             this.panel20 = new System.Windows.Forms.Panel();
             this.txbDateBorn = new System.Windows.Forms.TextBox();
@@ -125,28 +125,19 @@
             // 
             // panel15
             // 
-            this.panel15.Controls.Add(this.cbbReligion);
+            this.panel15.Controls.Add(this.txbReligion);
             this.panel15.Controls.Add(this.label10);
             this.panel15.Location = new System.Drawing.Point(49, 313);
             this.panel15.Name = "panel15";
             this.panel15.Size = new System.Drawing.Size(525, 38);
             this.panel15.TabIndex = 3;
             // 
-            // cbbReligion
+            // txbReligion
             // 
-            this.cbbReligion.FormattingEnabled = true;
-            this.cbbReligion.Items.AddRange(new object[] {
-            "Đạo Phật",
-            "Đạo Thiên Chúa",
-            "Đạo Cao Đài",
-            "Đạo Tin Lành",
-            "Đạo Hào Hảo",
-            "Đạo Hồi",
-            "Khác"});
-            this.cbbReligion.Location = new System.Drawing.Point(139, 8);
-            this.cbbReligion.Name = "cbbReligion";
-            this.cbbReligion.Size = new System.Drawing.Size(151, 21);
-            this.cbbReligion.TabIndex = 6;
+            this.txbReligion.Location = new System.Drawing.Point(139, 8);
+            this.txbReligion.Name = "txbReligion";
+            this.txbReligion.Size = new System.Drawing.Size(383, 20);
+            this.txbReligion.TabIndex = 1;
             // 
             // label10
             // 
@@ -160,31 +151,19 @@
             // 
             // panel16
             // 
-            this.panel16.Controls.Add(this.cbbNation);
+            this.panel16.Controls.Add(this.txbNation);
             this.panel16.Controls.Add(this.label11);
             this.panel16.Location = new System.Drawing.Point(49, 269);
             this.panel16.Name = "panel16";
             this.panel16.Size = new System.Drawing.Size(525, 38);
             this.panel16.TabIndex = 3;
             // 
-            // cbbNation
+            // txbNation
             // 
-            this.cbbNation.FormattingEnabled = true;
-            this.cbbNation.Items.AddRange(new object[] {
-            "Kinh",
-            "Mường",
-            "Tày",
-            "Nùng",
-            "Ê-đê",
-            "Hoa",
-            "Khơ me",
-            "Giao",
-            "Co",
-            "Khác"});
-            this.cbbNation.Location = new System.Drawing.Point(139, 9);
-            this.cbbNation.Name = "cbbNation";
-            this.cbbNation.Size = new System.Drawing.Size(151, 21);
-            this.cbbNation.TabIndex = 5;
+            this.txbNation.Location = new System.Drawing.Point(139, 8);
+            this.txbNation.Name = "txbNation";
+            this.txbNation.Size = new System.Drawing.Size(383, 20);
+            this.txbNation.TabIndex = 1;
             // 
             // label11
             // 
@@ -198,19 +177,19 @@
             // 
             // panel17
             // 
-            this.panel17.Controls.Add(this.txbAddress);
+            this.panel17.Controls.Add(this.txbAdress);
             this.panel17.Controls.Add(this.label12);
             this.panel17.Location = new System.Drawing.Point(49, 225);
             this.panel17.Name = "panel17";
             this.panel17.Size = new System.Drawing.Size(525, 38);
             this.panel17.TabIndex = 3;
             // 
-            // txbAddress
+            // txbAdress
             // 
-            this.txbAddress.Location = new System.Drawing.Point(139, 8);
-            this.txbAddress.Name = "txbAddress";
-            this.txbAddress.Size = new System.Drawing.Size(383, 20);
-            this.txbAddress.TabIndex = 1;
+            this.txbAdress.Location = new System.Drawing.Point(139, 8);
+            this.txbAdress.Name = "txbAdress";
+            this.txbAdress.Size = new System.Drawing.Size(383, 20);
+            this.txbAdress.TabIndex = 1;
             // 
             // label12
             // 
@@ -250,33 +229,33 @@
             // 
             // panel19
             // 
-            this.panel19.Controls.Add(this.ckbFemale);
-            this.panel19.Controls.Add(this.ckbMale);
+            this.panel19.Controls.Add(this.checkBox3);
+            this.panel19.Controls.Add(this.checkBox4);
             this.panel19.Controls.Add(this.label14);
             this.panel19.Location = new System.Drawing.Point(49, 137);
             this.panel19.Name = "panel19";
             this.panel19.Size = new System.Drawing.Size(525, 38);
             this.panel19.TabIndex = 3;
             // 
-            // ckbFemale
+            // checkBox3
             // 
-            this.ckbFemale.AutoSize = true;
-            this.ckbFemale.Location = new System.Drawing.Point(250, 8);
-            this.ckbFemale.Name = "ckbFemale";
-            this.ckbFemale.Size = new System.Drawing.Size(40, 17);
-            this.ckbFemale.TabIndex = 2;
-            this.ckbFemale.Text = "Nữ";
-            this.ckbFemale.UseVisualStyleBackColor = true;
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(231, 8);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(40, 17);
+            this.checkBox3.TabIndex = 2;
+            this.checkBox3.Text = "Nữ";
+            this.checkBox3.UseVisualStyleBackColor = true;
             // 
-            // ckbMale
+            // checkBox4
             // 
-            this.ckbMale.AutoSize = true;
-            this.ckbMale.Location = new System.Drawing.Point(139, 8);
-            this.ckbMale.Name = "ckbMale";
-            this.ckbMale.Size = new System.Drawing.Size(48, 17);
-            this.ckbMale.TabIndex = 1;
-            this.ckbMale.Text = "Nam";
-            this.ckbMale.UseVisualStyleBackColor = true;
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(139, 8);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(48, 17);
+            this.checkBox4.TabIndex = 1;
+            this.checkBox4.Text = "Nam";
+            this.checkBox4.UseVisualStyleBackColor = true;
             // 
             // label14
             // 
@@ -372,7 +351,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(634, 436);
             this.Controls.Add(this.panel13);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.Name = "fEditInformation";
             this.Text = "Chỉnh sửa thông tin cá nhân";
             this.panel13.ResumeLayout(false);
@@ -406,18 +384,20 @@
         private System.Windows.Forms.TextBox txbParentName;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Panel panel15;
+        private System.Windows.Forms.TextBox txbReligion;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Panel panel16;
+        private System.Windows.Forms.TextBox txbNation;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Panel panel17;
-        private System.Windows.Forms.TextBox txbAddress;
+        private System.Windows.Forms.TextBox txbAdress;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Panel panel18;
         private System.Windows.Forms.TextBox txbNativeBorn;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Panel panel19;
-        private System.Windows.Forms.CheckBox ckbFemale;
-        private System.Windows.Forms.CheckBox ckbMale;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Panel panel20;
         private System.Windows.Forms.TextBox txbDateBorn;
@@ -428,7 +408,5 @@
         private System.Windows.Forms.Panel panel22;
         private System.Windows.Forms.TextBox txbCodeStudent;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.ComboBox cbbReligion;
-        private System.Windows.Forms.ComboBox cbbNation;
     }
 }

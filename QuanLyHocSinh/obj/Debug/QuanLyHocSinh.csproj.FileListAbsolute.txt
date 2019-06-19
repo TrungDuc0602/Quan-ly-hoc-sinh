@@ -20,3 +20,16 @@ C:\Users\TrungDuc\Documents\Visual Studio 2015\Projects\QuanLyHocSinh\Quan-ly-ho
 C:\Users\TrungDuc\Documents\Visual Studio 2015\Projects\QuanLyHocSinh\Quan-ly-hoc-sinh\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.fTableManager.resources
 C:\Users\TrungDuc\Documents\Visual Studio 2015\Projects\QuanLyHocSinh\Quan-ly-hoc-sinh\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.Properties.Resources.resources
 C:\Users\TrungDuc\Documents\Visual Studio 2015\Projects\QuanLyHocSinh\Quan-ly-hoc-sinh\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.csproj.GenerateResource.Cache
+D:\Đồ án PTTK\Quan-ly-hoc-sinh\QuanLyHocSinh\bin\Debug\QuanLyHocSinh.exe.config
+D:\Đồ án PTTK\Quan-ly-hoc-sinh\QuanLyHocSinh\bin\Debug\QuanLyHocSinh.exe
+D:\Đồ án PTTK\Quan-ly-hoc-sinh\QuanLyHocSinh\bin\Debug\QuanLyHocSinh.pdb
+D:\Đồ án PTTK\Quan-ly-hoc-sinh\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.csprojAssemblyReference.cache
+D:\Đồ án PTTK\Quan-ly-hoc-sinh\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.fEditInformation.resources
+D:\Đồ án PTTK\Quan-ly-hoc-sinh\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.flogin.resources
+D:\Đồ án PTTK\Quan-ly-hoc-sinh\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.fTableManager.resources
+D:\Đồ án PTTK\Quan-ly-hoc-sinh\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.Properties.Resources.resources
+D:\Đồ án PTTK\Quan-ly-hoc-sinh\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.csproj.GenerateResource.cache
+D:\Đồ án PTTK\Quan-ly-hoc-sinh\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.csproj.CoreCompileInputs.cache
+D:\Đồ án PTTK\Quan-ly-hoc-sinh\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.exe
+D:\Đồ án PTTK\Quan-ly-hoc-sinh\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.pdb
+D:\Đồ án PTTK\Quan-ly-hoc-sinh\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.AdTableManager.resources
