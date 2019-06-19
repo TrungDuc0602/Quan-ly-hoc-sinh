@@ -42,7 +42,10 @@ namespace QuanLyHocSinh
                 usertype = getutype(username);
                 if( usertype == "1")
                 {
-
+                    AdTableManager f = new AdTableManager(txbUseName.Text);
+                    this.Hide();
+                    f.ShowDialog();
+                    this.Show();
                 }
                 else
                 {

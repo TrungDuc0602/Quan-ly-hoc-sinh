@@ -1,6 +1,6 @@
 ﻿namespace QuanLyHocSinh
 {
-    partial class fTableManager
+    partial class AdTableManager
     {
         /// <summary>
         /// Required designer variable.
@@ -28,9 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
             this.panel12 = new System.Windows.Forms.Panel();
-            this.txbDisplayNameStudent = new System.Windows.Forms.Label();
+            this.txbDisplayNameNguoiDung = new System.Windows.Forms.Label();
             this.btnLogOut = new System.Windows.Forms.Button();
             this.tclStudent = new System.Windows.Forms.TabControl();
             this.tpHome = new System.Windows.Forms.TabPage();
@@ -66,7 +65,6 @@
             this.panel22 = new System.Windows.Forms.Panel();
             this.txbCodeStudent = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.panel1.SuspendLayout();
             this.panel12.SuspendLayout();
             this.tclStudent.SuspendLayout();
             this.tpInformation.SuspendLayout();
@@ -82,38 +80,26 @@
             this.panel22.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.panel12);
-            this.panel1.Controls.Add(this.tclStudent);
-            this.panel1.Location = new System.Drawing.Point(3, 2);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(975, 774);
-            this.panel1.TabIndex = 0;
-            // 
             // panel12
             // 
-            this.panel12.Controls.Add(this.txbDisplayNameStudent);
+            this.panel12.Controls.Add(this.txbDisplayNameNguoiDung);
             this.panel12.Controls.Add(this.btnLogOut);
-            this.panel12.Location = new System.Drawing.Point(4, 5);
+            this.panel12.Location = new System.Drawing.Point(7, 12);
             this.panel12.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(964, 51);
-            this.panel12.TabIndex = 1;
-            this.panel12.Paint += new System.Windows.Forms.PaintEventHandler(this.panel12_Paint);
+            this.panel12.Size = new System.Drawing.Size(962, 54);
+            this.panel12.TabIndex = 2;
             // 
-            // txbDisplayNameStudent
+            // txbDisplayNameNguoiDung
             // 
-            this.txbDisplayNameStudent.AutoSize = true;
-            this.txbDisplayNameStudent.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txbDisplayNameStudent.Location = new System.Drawing.Point(519, 12);
-            this.txbDisplayNameStudent.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.txbDisplayNameStudent.Name = "txbDisplayNameStudent";
-            this.txbDisplayNameStudent.Size = new System.Drawing.Size(149, 25);
-            this.txbDisplayNameStudent.TabIndex = 0;
-            this.txbDisplayNameStudent.Text = "Tên người dùng";
-            this.txbDisplayNameStudent.Click += new System.EventHandler(this.txbDisplayNameStudent_Click);
+            this.txbDisplayNameNguoiDung.AutoSize = true;
+            this.txbDisplayNameNguoiDung.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbDisplayNameNguoiDung.Location = new System.Drawing.Point(519, 12);
+            this.txbDisplayNameNguoiDung.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.txbDisplayNameNguoiDung.Name = "txbDisplayNameNguoiDung";
+            this.txbDisplayNameNguoiDung.Size = new System.Drawing.Size(149, 25);
+            this.txbDisplayNameNguoiDung.TabIndex = 0;
+            this.txbDisplayNameNguoiDung.Text = "Tên người dùng";
             // 
             // btnLogOut
             // 
@@ -131,12 +117,12 @@
             this.tclStudent.Controls.Add(this.tpHome);
             this.tclStudent.Controls.Add(this.tpDisplayPoint);
             this.tclStudent.Controls.Add(this.tpInformation);
-            this.tclStudent.Location = new System.Drawing.Point(4, 54);
+            this.tclStudent.Location = new System.Drawing.Point(5, 61);
             this.tclStudent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tclStudent.Name = "tclStudent";
             this.tclStudent.SelectedIndex = 0;
-            this.tclStudent.Size = new System.Drawing.Size(970, 712);
-            this.tclStudent.TabIndex = 0;
+            this.tclStudent.Size = new System.Drawing.Size(978, 443);
+            this.tclStudent.TabIndex = 3;
             // 
             // tpHome
             // 
@@ -144,11 +130,10 @@
             this.tpHome.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tpHome.Name = "tpHome";
             this.tpHome.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tpHome.Size = new System.Drawing.Size(962, 679);
+            this.tpHome.Size = new System.Drawing.Size(970, 410);
             this.tpHome.TabIndex = 0;
             this.tpHome.Text = "Trang chủ";
             this.tpHome.UseVisualStyleBackColor = true;
-            this.tpHome.Click += new System.EventHandler(this.tIn_Click);
             // 
             // tpDisplayPoint
             // 
@@ -156,7 +141,7 @@
             this.tpDisplayPoint.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tpDisplayPoint.Name = "tpDisplayPoint";
             this.tpDisplayPoint.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tpDisplayPoint.Size = new System.Drawing.Size(962, 679);
+            this.tpDisplayPoint.Size = new System.Drawing.Size(970, 410);
             this.tpDisplayPoint.TabIndex = 1;
             this.tpDisplayPoint.Text = "Xem điểm";
             this.tpDisplayPoint.UseVisualStyleBackColor = true;
@@ -168,7 +153,7 @@
             this.tpInformation.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tpInformation.Name = "tpInformation";
             this.tpInformation.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tpInformation.Size = new System.Drawing.Size(962, 679);
+            this.tpInformation.Size = new System.Drawing.Size(970, 410);
             this.tpInformation.TabIndex = 2;
             this.tpInformation.Text = "Thông tin cá nhân";
             this.tpInformation.UseVisualStyleBackColor = true;
@@ -190,8 +175,6 @@
             this.panel13.Name = "panel13";
             this.panel13.Size = new System.Drawing.Size(940, 662);
             this.panel13.TabIndex = 1;
-            this.panel13.Paint += new System.Windows.Forms.PaintEventHandler(this.panel13_Paint);
-            this.panel13.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.panel13_MouseDoubleClick);
             // 
             // btEditInformation
             // 
@@ -202,7 +185,6 @@
             this.btEditInformation.TabIndex = 4;
             this.btEditInformation.Text = "Chỉnh sửa";
             this.btEditInformation.UseVisualStyleBackColor = true;
-            this.btEditInformation.Click += new System.EventHandler(this.btEditInformation_Click);
             // 
             // panel14
             // 
@@ -411,7 +393,6 @@
             this.txbDateBorn.Name = "txbDateBorn";
             this.txbDateBorn.Size = new System.Drawing.Size(572, 26);
             this.txbDateBorn.TabIndex = 1;
-            this.txbDateBorn.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
             // 
             // label15
             // 
@@ -482,18 +463,15 @@
             this.label17.TabIndex = 0;
             this.label17.Text = "Mã học sinh:";
             // 
-            // fTableManager
+            // AdTableManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 774);
-            this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "fTableManager";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Phần mềm quản lý học sinh";
-            this.Load += new System.EventHandler(this.fTableManager_Load);
-            this.panel1.ResumeLayout(false);
+            this.ClientSize = new System.Drawing.Size(982, 499);
+            this.Controls.Add(this.tclStudent);
+            this.Controls.Add(this.panel12);
+            this.Name = "AdTableManager";
+            this.Text = "AdTableManager";
             this.panel12.ResumeLayout(false);
             this.panel12.PerformLayout();
             this.tclStudent.ResumeLayout(false);
@@ -523,12 +501,12 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel12;
+        private System.Windows.Forms.Label txbDisplayNameNguoiDung;
+        private System.Windows.Forms.Button btnLogOut;
         private System.Windows.Forms.TabControl tclStudent;
         private System.Windows.Forms.TabPage tpHome;
         private System.Windows.Forms.TabPage tpDisplayPoint;
-        private System.Windows.Forms.Panel panel12;
-        private System.Windows.Forms.Button btnLogOut;
         private System.Windows.Forms.TabPage tpInformation;
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.Button btEditInformation;
@@ -560,6 +538,5 @@
         private System.Windows.Forms.Panel panel22;
         private System.Windows.Forms.TextBox txbCodeStudent;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label txbDisplayNameStudent;
     }
 }
