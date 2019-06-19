@@ -36,14 +36,5 @@ namespace QuanLyHocSinh.DAO
 
             return resutl.Rows.Count > 0;
         }
-
-        public string getUtype(string username)
-        {
-            string query = "SELECT * FROM NGUOI_DUNG WHERE MaNguoiDung = '" + username + "'";
-
-            DataTable resutl = DataProvider.Instance.ExecuteQuery(query);
-
-            return resutl.Rows[0][2].ToString();
-        }
     }
 }

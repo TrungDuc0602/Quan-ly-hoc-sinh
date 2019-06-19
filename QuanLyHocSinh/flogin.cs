@@ -13,7 +13,6 @@ namespace QuanLyHocSinh
 {
     public partial class flogin : Form
     {
-        public string usertype;
         public flogin()
         {
             InitializeComponent();
@@ -39,44 +38,19 @@ namespace QuanLyHocSinh
 
             if (login(username, password))
             {
-                usertype = getutype(username);
-                if( usertype == "1")
-                {
-                    AdTableManager f = new AdTableManager(txbUseName.Text);
-                    this.Hide();
-                    f.ShowDialog();
-                    this.Show();
-                }
-                else
-                {
-                    if( usertype == "2")
-                    {
-                        fTableManager f = new fTableManager(txbUseName.Text);
-                        this.Hide();
-                        f.ShowDialog();
-                        this.Show();
-                    }
-                    else
-                    {
-
-                    }
-                }
-                
+                fTableManager f = new fTableManager(txbUseName.Text);
+                this.Hide();
+                f.ShowDialog();
+                this.Show();
             }
             else
                 MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu", "Thông báo");           
-        }
-
-         string getutype(string username)
-        {
-            return AccountDAO.Instance.getUtype(username);
         }
 
         bool login(string username, string password)
         {
             return AccountDAO.Instance.login(username, password);
         }
-
 
 
         #region TrashVoid
