@@ -1,0 +1,185 @@
+﻿using QuanLyHocSinh.DTO;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace QuanLyHocSinh.DAO
+{
+    class AdminDAO
+    {
+        private static AdminDAO instance;
+
+        public static AdminDAO Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new AdminDAO();
+                return instance;
+            }
+
+            private set
+            {
+                instance = value;
+            }
+        }
+
+        #region LoadList
+        public DataTable LoadListUser()
+        {
+            string sql = "Select * From NGUOI_DUNG";
+            var rs = DataProvider.Instance.ExecuteQuery(sql);
+
+            return rs;
+        }
+
+        public DataTable LoadListTeacher()
+        {
+            string sql = "Select * From GIAO_VIEN";
+            var rs = DataProvider.Instance.ExecuteQuery(sql);
+
+            return rs;
+        }
+
+        public DataTable LoadListStudent()
+        {
+            string sql = "Select * From HOC_SINH";
+            var rs = DataProvider.Instance.ExecuteQuery(sql);
+
+            return rs;
+        }
+
+        public DataTable LoadListAssigned()
+        {
+            string sql = "Select * From PHAN_CONG";
+            var rs = DataProvider.Instance.ExecuteQuery(sql);
+
+            return rs;
+        }
+
+        public DataTable LoadListTeacherOfClass()
+        {
+            string sql = "Select * From GIAO_VIEN_LOP";
+            var rs = DataProvider.Instance.ExecuteQuery(sql);
+
+            return rs;
+        }
+
+        public DataTable LoadListSubjects()
+        {
+            string sql = "Select * From MON_HOC";
+            var rs = DataProvider.Instance.ExecuteQuery(sql);
+
+            return rs;
+        }
+
+        public DataTable LoadListClass()
+        {
+            string sql = "Select * From LOP";
+            var rs = DataProvider.Instance.ExecuteQuery(sql);
+
+            return rs;
+        }
+
+        public DataTable LoadListYear()
+        {
+            string sql = "Select * From NAM_HOC";
+            var rs = DataProvider.Instance.ExecuteQuery(sql);
+
+            return rs;
+        }
+
+        #endregion
+
+        #region Account
+        public void AdNewUser(string MaNguoiDung, string MatKhau)
+        {
+      
+                DataProvider.Instance.ExecuteQuery("usp_AddAccount @MaNguoiDung = '" + MaNguoiDung + "', @MatKhau ='" + MatKhau + "'  ");
+        
+        }
+
+        public void EditUser(string MaNguoiDung, string MatKhau)
+        {
+      
+                DataProvider.Instance.ExecuteQuery("usp_EditAccount @MaNguoiDung = '" + MaNguoiDung + "', @MatKhau ='" + MatKhau + "'  ");
+           
+        }
+
+        public void DeleteUser(string MaNguoiDung)
+        {
+                DataProvider.Instance.ExecuteQuery("usp_DeleteAccount @MaNguoiDung = '" + MaNguoiDung + "'  ");
+        }
+
+        #endregion
+
+        #region Teacher
+
+        public void SaveTaecher(string MaGiaoVien, string HoTen, bool GioiTinh, DateTime NgaySinh, string NoiSinh, string DiaChi, string DienThoai)
+        {
+
+            DataProvider.Instance.ExecuteQuery("usp_AddTeacher @MaGiaoVien = '" + MaGiaoVien + "', @HoTen ='" + HoTen + "', @GioiTinh ='" + GioiTinh + "', @NgaySinh ='" + NgaySinh + "' , @NoiSinh ='" + NoiSinh + "' , @DiaChi ='" + DiaChi + "', @DienThoai ='" + DienThoai + "' ");
+            string mk = "1";
+            AdNewUser(MaGiaoVien, mk);
+        }
+
+        public void EditTeacher(string MaGiaoVien, string HoTen, bool GioiTinh, DateTime NgaySinh, string NoiSinh, string DiaChi, string DienThoai)
+        {
+            DataProvider.Instance.ExecuteQuery("usp_EditTeacher @MaGiaoVien = '" + MaGiaoVien + "', @HoTen ='" + HoTen + "', @GioiTinh ='" + GioiTinh + "', @NgaySinh ='" + NgaySinh + "' , @NoiSinh ='" + NoiSinh + "' , @DiaChi ='" + DiaChi + "', @DienThoai ='" + DienThoai + "' ");
+        }
+
+        public void DeleteTeacher(string MaGiaoVien)
+        {
+            
+            DataProvider.Instance.ExecuteQuery("usp_DeleteTeacher @MaGiaoVien = '" + MaGiaoVien + "'  ");
+        }
+
+        #endregion
+
+        #region Assigned
+
+        public void SaveAssigned(string MaPhanCong,string MaGiaoVienLop,string MaMonHoc)
+        {
+
+            DataProvider.Instance.ExecuteQuery("usp_AddAssigned @MaPhanCong = '" + MaPhanCong + "', @MaGiaoVienLop ='" + MaGiaoVienLop + "',@MaMonHoc ='" + MaMonHoc + "'  ");
+
+        }
+
+        public void EditAssigned(string MaPhanCong, string MaGiaoVienLop, string MaMonHoc)
+        {
+
+            DataProvider.Instance.ExecuteQuery("usp_EditAssigned @MaPhanCong = '" + MaPhanCong + "', @MaGiaoVienLop ='" + MaGiaoVienLop + "',@MaMonHoc ='" + MaMonHoc + "'  ");
+
+        }
+
+        public void DeleteAssigned(string MaPhanCong)
+        {
+            DataProvider.Instance.ExecuteQuery("usp_DeleteAssigned @MaPhanCong = '" + MaPhanCong + "'  ");
+        }
+
+        #endregion
+
+        #region Teacher Of Class
+
+        public void SaveTaecherOfClass(string MaGiaoVienLop,string MaGiaoVien,string MaLop,string MaNamHoc)
+        {
+            DataProvider.Instance.ExecuteQuery("usp_AddTeacherOfStudent @MaGiaoVienLop = '" + MaGiaoVienLop + "', @MaGiaoVien ='" + MaGiaoVien + "' , @MaLop ='" + MaLop + "', @MaNamHoc ='" + MaNamHoc + "' ");
+
+        }
+
+        public void EditTeacherOfClass(string MaGiaoVienLop, string MaGiaoVien, string MaLop, string MaNamHoc)
+        {
+            DataProvider.Instance.ExecuteQuery("usp_EditTeacherOfStudent @MaGiaoVienLop = '" + MaGiaoVienLop + "', @MaGiaoVien ='" + MaGiaoVien + "' , @MaLop ='" + MaLop + "', @MaNamHoc ='" + MaNamHoc + "' ");
+        }
+
+        public void DeleteTeacherOfClass(string MaGiaoVienLop)
+        {
+            DataProvider.Instance.ExecuteQuery("usp_DeleteTeacherOfClass @MaGiaoVienLop = '" + MaGiaoVienLop + "'  ");
+        }
+
+        #endregion
+    }
+}

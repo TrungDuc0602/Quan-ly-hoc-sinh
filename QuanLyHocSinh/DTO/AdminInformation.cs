@@ -37,19 +37,6 @@ namespace QuanLyHocSinh.DTO
             }
         }
 
-        private bool loaiNguoiDung;
-        public bool LoaiNguoiDung
-        {
-            get
-            {
-                return loaiNguoiDung;
-            }
-
-            set
-            {
-                loaiNguoiDung = value;
-            }
-        }
 
 
 
@@ -57,8 +44,7 @@ namespace QuanLyHocSinh.DTO
         {
             this.MaNguoiDung = data.Rows[0].ItemArray[0].ToString();
             this.MatKhau = data.Rows[0].ItemArray[1].ToString();
-            this.LoaiNguoiDung = (bool)data.Rows[0][2];
-           
+
         }
     }
 }

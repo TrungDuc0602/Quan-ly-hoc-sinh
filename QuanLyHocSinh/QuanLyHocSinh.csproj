@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,10 +54,13 @@
       <DependentUpon>AdTableManager.cs</DependentUpon>
     </Compile>
     <Compile Include="DAO\AccountDAO.cs" />
-    <Compile Include="DAO\AdminInformationDAO.cs" />
+    <Compile Include="DAO\AdminDAO.cs" />
     <Compile Include="DAO\DataProvider.cs" />
+    <Compile Include="DAO\PointDAO.cs" />
     <Compile Include="DAO\StudentInformationDAO.cs" />
+    <Compile Include="DAO\UpdateInforDAO.cs" />
     <Compile Include="DTO\AdminInformation.cs" />
+    <Compile Include="DTO\Point.cs" />
     <Compile Include="DTO\StudentInformation.cs" />
     <Compile Include="fEditInformation.cs">
       <SubType>Form</SubType>
