@@ -541,3 +541,13 @@ BEGIN
 	 UPDATE PHAN_CONG SET  MaGiaoVienLop= @MaGiaoVienLop, MaMonHoc = @MaMonHoc Where MaPhanCong = @MaPhanCong
 END
 
+-- Them 1 hs
+CREATE PROC usp_AddStudent
+@MaHocSinh nvarchar(50), @HoTen nvarchar(50), @GioiTinh bit,
+@NgaySinh date, @QueQuan nvarchar(50), @DiaChi nvarchar(50),
+@DanToc nvarchar(50), @TonGiao nvarchar(50), @NguoiThan nvarchar(50)
+AS
+BEGIN
+	INSERT INTO HOC_SINH ( MaHocSinh,HoTen,NgaySinh, GioiTinh,  NoiSinh, DiaChi , DanToc, TonGiao , TenNguoiThan)VALUES
+	( @HoTen,  @NgaySinh,@GioiTinh,@QueQuan, @DiaChi, @DanToc, @TonGiao, @NguoiThan,@MaHocSinh)
+END

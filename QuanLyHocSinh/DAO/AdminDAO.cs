@@ -139,6 +139,12 @@ namespace QuanLyHocSinh.DAO
 
         #endregion
 
+        //strudent
+        public void SaveInfor(string MaHocSinh, string HoTen, bool GioiTinh, DateTime NgaySinh, string QueQuan, string DiaChi, string DanToc, string TonGiao, string NguoiThan)
+        {
+            DataProvider.Instance.ExecuteQuery("usp_AddStudent @MaHocSinh = '" + MaHocSinh + "', @HoTen =N'" + HoTen + "', @GioiTinh ='" + GioiTinh + "', @NgaySinh ='" + NgaySinh + "', @QueQuan =N'" + QueQuan + "', @DiaChi =N'" + DiaChi + "', @DanToc =N'" + DanToc + "', @TonGiao =N'" + TonGiao + "', @NguoiThan =N'" + NguoiThan + "'  ");
+        }
+
         #region Assigned
 
         public void SaveAssigned(string MaPhanCong,string MaGiaoVienLop,string MaMonHoc)

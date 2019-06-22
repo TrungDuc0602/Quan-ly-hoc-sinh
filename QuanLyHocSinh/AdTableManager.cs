@@ -265,12 +265,43 @@ namespace QuanLyHocSinh
         //Manager Student
         private void btAddS_Click(object sender, EventArgs e)
         {
+            string ms = textMHS.Text;
+            string name = textNameStudent.Text;
+
+            bool tam;
+            if (checkMan.Checked)
+                tam = true;
+            else
+                tam = false;
+
+            DateTime sn = DateTime.Parse(textDateS.Text);
+            string que = textQue.Text;
+            string dc = textAddS.Text;
+            string dt = (string)cbbNation.SelectedValue;
+            string tg = (string)cbbReligion.SelectedValue;
+            string nt = txbParentName.Text;
+            AdminDAO.Instance.SaveInfor(ms, name, tam, sn, que, dc, dt, tg, nt);
 
         }
 
         private void btEditS_Click(object sender, EventArgs e)
         {
+            string ms = textMHS.Text;
+            string name = textNameStudent.Text;
 
+            bool tam;
+            if (checkMan.Checked)
+                tam = true;
+            else
+                tam = false;
+
+            DateTime sn = DateTime.Parse(textDateS.Text);
+            string que = textQue.Text;
+            string dc = textAddS.Text;
+            string dt = (string)cbbNation.SelectedValue;
+            string tg = (string)cbbReligion.SelectedValue;
+            string nt = txbParentName.Text;
+            UpdateInforDAO.Instance.UpdateInfor(ms, name, tam, sn, que, dc, dt, tg, nt);
         }
 
         private void btDeleteS_Click(object sender, EventArgs e)
