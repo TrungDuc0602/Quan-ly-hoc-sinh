@@ -306,7 +306,9 @@ namespace QuanLyHocSinh
 
         private void btDeleteS_Click(object sender, EventArgs e)
         {
+            string ms = textMHS.Text;
 
+            AdminDAO.Instance.DeleteInforS(ms);
         }
 
 

@@ -139,11 +139,18 @@ namespace QuanLyHocSinh.DAO
 
         #endregion
 
-        //strudent
+        #region Strudent
         public void SaveInfor(string MaHocSinh, string HoTen, bool GioiTinh, DateTime NgaySinh, string QueQuan, string DiaChi, string DanToc, string TonGiao, string NguoiThan)
         {
-            DataProvider.Instance.ExecuteQuery("usp_AddStudent @MaHocSinh = '" + MaHocSinh + "', @HoTen =N'" + HoTen + "', @GioiTinh ='" + GioiTinh + "', @NgaySinh ='" + NgaySinh + "', @QueQuan =N'" + QueQuan + "', @DiaChi =N'" + DiaChi + "', @DanToc =N'" + DanToc + "', @TonGiao =N'" + TonGiao + "', @NguoiThan =N'" + NguoiThan + "'  ");
+            DataProvider.Instance.ExecuteQuery("usp_AddStudentAm @MaHocSinh = '" + MaHocSinh + "', @HoTen =N'" + HoTen + "', @GioiTinh ='" + GioiTinh + "', @NgaySinh ='" + NgaySinh + "', @QueQuan =N'" + QueQuan + "', @DiaChi =N'" + DiaChi + "', @DanToc =N'" + DanToc + "', @TonGiao =N'" + TonGiao + "', @NguoiThan =N'" + NguoiThan + "'  ");
         }
+
+        public void DeleteInforS(string MaHocSinh)
+        {
+            DataProvider.Instance.ExecuteQuery("usp_DeleteStudnetAm @MaHocSinh = '" + MaHocSinh + "' ");
+        }
+
+        #endregion
 
         #region Assigned
 
