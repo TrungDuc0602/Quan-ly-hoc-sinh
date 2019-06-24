@@ -137,7 +137,7 @@ namespace QuanLyHocSinh.DTO
             }
         }
 
-        public StudentInformation(DataTable data)
+        /*public StudentInformation(DataTable data)
         {
             this.MaHocSinh= data.Rows[0].ItemArray[0].ToString();
             this.HoTen = data.Rows[0].ItemArray[1].ToString();
@@ -148,6 +148,46 @@ namespace QuanLyHocSinh.DTO
             this.MaDanToc = data.Rows[0].ItemArray[6].ToString();
             this.MaTonGiao = data.Rows[0].ItemArray[7].ToString();
             this.TenNguoiThan = data.Rows[0].ItemArray[8].ToString();
+        }*/
+
+        public StudentInformation(DataTable data)
+        {
+            this.NoiSinh = null;
+
+            this.MaHocSinh = data.Rows[0].ItemArray[0].ToString();
+
+            this.HoTen = data.Rows[0].ItemArray[1].ToString();
+
+            this.NoiSinh = data.Rows[0].ItemArray[4].ToString();
+
+            if (this.NoiSinh == "")
+            {
+                this.GioiTinh = true;
+
+                this.NgaySinh  = new DateTime(2000, 01, 01);
+
+                this.DiaChi = "";
+
+                this.MaDanToc = "";
+
+                this.MaTonGiao = "";
+
+                this.TenNguoiThan = "";
+            }
+            else
+            {
+                this.GioiTinh = (bool)data.Rows[0][2];
+
+                this.NgaySinh = (DateTime)data.Rows[0][3];
+
+                this.DiaChi = data.Rows[0].ItemArray[5].ToString();
+
+                this.MaDanToc = data.Rows[0].ItemArray[6].ToString();
+
+                this.MaTonGiao = data.Rows[0].ItemArray[7].ToString();
+
+                this.TenNguoiThan = data.Rows[0].ItemArray[8].ToString();
+            }
         }
     }
 }

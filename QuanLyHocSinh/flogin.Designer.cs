@@ -116,7 +116,7 @@
             this.txbUseName.Name = "txbUseName";
             this.txbUseName.Size = new System.Drawing.Size(269, 20);
             this.txbUseName.TabIndex = 1;
-            this.txbUseName.Text = "S017001";
+            this.txbUseName.Text = "T011001";
             // 
             // lbusename
             // 

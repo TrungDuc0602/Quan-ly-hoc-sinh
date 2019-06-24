@@ -17,7 +17,7 @@ namespace QuanLyHocSinh
     {
         public fTableManager(string str_Value)      //str_value là Mã học sinh được đưa từ fLogin qua
         {
-            InitializeComponent();        
+            InitializeComponent();
 
             loadStudentInformation(str_Value);
           

@@ -38,13 +38,23 @@ namespace QuanLyHocSinh
 
             if (login(username, password))
             {
-                fTableManager f = new fTableManager(txbUseName.Text);
-                this.Hide();
-                f.ShowDialog();
-                this.Show();
+                if (username[0] == 'T')
+                {
+                    fTeacher f = new fTeacher(txbUseName.Text);
+                    this.Hide();
+                    f.ShowDialog();
+                    this.Show();
+                }
+                else
+                {
+                    fTableManager f = new fTableManager(txbUseName.Text);
+                    this.Hide();
+                    f.ShowDialog();
+                    this.Show();
+                }
             }
             else
-                MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu", "Thông báo");           
+                MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu", "Thông báo");
         }
 
         bool login(string username, string password)

@@ -47,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAO\AccountDAO.cs" />
+    <Compile Include="DAO\AddNewStudentDAO.cs" />
+    <Compile Include="DAO\ConductDAO.cs" />
     <Compile Include="DAO\DataProvider.cs" />
     <Compile Include="DAO\PointDAO.cs" />
     <Compile Include="DAO\StudentInformationDAO.cs" />
@@ -71,6 +73,12 @@
     <Compile Include="fTableManager.Designer.cs">
       <DependentUpon>fTableManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="fTeacher.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fTeacher.Designer.cs">
+      <DependentUpon>fTeacher.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="fEditInformation.resx">
@@ -81,6 +89,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="fTableManager.resx">
       <DependentUpon>fTableManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fTeacher.resx">
+      <DependentUpon>fTeacher.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

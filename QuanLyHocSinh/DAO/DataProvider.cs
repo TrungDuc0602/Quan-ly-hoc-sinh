@@ -42,6 +42,7 @@ namespace QuanLyHocSinh.DAO
 
                 SqlDataAdapter adapter = new SqlDataAdapter(command);    //trung gian thực hiện câu truy vấn lấy dữ liệu ra 
 
+
                 adapter.Fill(data);
 
                 connection.Close();
