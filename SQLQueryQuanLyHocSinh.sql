@@ -20,6 +20,15 @@ CREATE TABLE HOC_SINH
 	PRIMARY KEY(MaHocSinh)
 );
 
+CREATE TABLE HOC_SINH_LOP
+(
+	MaHocSinhLop nvarchar(50),
+	MaHocSinh nvarchar(50),
+	MaNamHoc nvarchar(50),
+	MaLop nvarchar(50),
+	PRIMARY KEY(MaHocSinhLop)
+);
+
 CREATE TABLE PHAN_CONG
 (
 	MaPhanCong nvarchar(50),
@@ -44,24 +53,7 @@ CREATE TABLE NGUOI_DUNG
 (
 	MaNguoiDung nvarchar(50),
 	MatKhau nvarchar(50),
-	LoaiNguoiDung int,
 	PRIMARY KEY(MaNguoiDung)
-	
-);
-
-CREATE TABLE LOAI_NGUOI_DUNG
-(
-	MaLoaiNguoiDung int,
-	TenLoaiNguoiDung nvarchar(50),
-	PRIMARY KEY(MaLoaiNguoiDung)
-	
-);
-
-CREATE TABLE KHOI_LOP
-(
-	MaKhoiLop nvarchar(50),
-	TenKhoiLop nvarchar(50),
-	PRIMARY KEY (MaKhoiLop)
 	
 );
 
@@ -81,6 +73,7 @@ CREATE TABLE GIAO_VIEN_LOP
 	MaGiaoVienLop nvarchar(50),
 	MaGiaoVien nvarchar(50),
 	MaLop nvarchar(50),
+	MaNamHoc nvarchar(50),
 	PRIMARY KEY(MaGiaoVienLop)
 	
 );
@@ -130,11 +123,10 @@ CREATE TABLE LOP
 (
 	MaLop nvarchar(50),
 	TenLop nvarchar(50),
-	MaKhoiLop nvarchar(50),
 	MaNamHoc nvarchar(50),
 	SiSo int,
 	MaGiaoVienCN nvarchar(50),
-	PRIMARY KEY(MaLop)
+	PRIMARY KEY(MaLop, MaNamHoc)
 );
 
 CREATE TABLE HOC_LUC
@@ -161,14 +153,6 @@ CREATE TABLE KQ_MON_HOC
 	PRIMARY KEY(MaHocSinhLop,MaMonHoc,MaHocKi,MaNamHoc)
 );
 
-CREATE TABLE HOC_SINH_LOP
-(
-	MaHocSinhLop nvarchar(50),
-	MaHocSinh nvarchar(50),
-	MaLop nvarchar(50),
-	PRIMARY KEY(MaHocSinhLop)
-);
-
 CREATE TABLE HANH_KIEM
 (
 	MaHanhKiem nvarchar(50),
@@ -188,13 +172,12 @@ CREATE TABLE MON_HOC
 
 -----------------------Khóa Ngoại------------------------
  ALTER TABLE HOC_SINH_LOP ADD FOREIGN KEY (MaHocSinh) REFERENCES HOC_SINH(MaHocSinh);
- ALTER TABLE HOC_SINH_LOP ADD FOREIGN KEY (MaLop) REFERENCES LOP(MaLop);
- ALTER TABLE NGUOI_DUNG ADD FOREIGN KEY (LoaiNguoiDung) REFERENCES LOAI_NGUOI_DUNG(MaLoaiNguoiDung);
+ ALTER TABLE HOC_SINH_LOP ADD FOREIGN KEY (MaLop, MaNamHoc) REFERENCES LOP(MaLop, MaNamHoc);
+ ALTER TABLE HOC_SINH_LOP ADD FOREIGN KEY (MaNamHoc) REFERENCES NAM_HOC(MaNamHoc);
  ALTER TABLE GIAO_VIEN_LOP ADD FOREIGN KEY (MaGiaoVien) REFERENCES GIAO_VIEN(MaGiaoVien);
- ALTER TABLE GIAO_VIEN_LOP ADD FOREIGN KEY (MaLop) REFERENCES LOP(MaLop);
+ ALTER TABLE GIAO_VIEN_LOP ADD FOREIGN KEY (MaLop, MaNamHoc) REFERENCES LOP(MaLop, MaNamHoc);
  ALTER TABLE PHAN_CONG  ADD FOREIGN KEY (MaGiaoVienLop) REFERENCES GIAO_VIEN_LOP(MaGiaoVienLop);
  ALTER TABLE PHAN_CONG ADD FOREIGN KEY (MaMonHoc) REFERENCES MON_HOC(MaMonHoc);
- ALTER TABLE LOP ADD FOREIGN KEY (MaKhoiLop) REFERENCES KHOI_LOP(MaKhoiLop);
  ALTER TABLE LOP ADD FOREIGN KEY (MaGiaoVienCN) REFERENCES GIAO_VIEN (MaGiaoVien);
  ALTER TABLE LOP ADD FOREIGN KEY (MaNamHoc) REFERENCES NAM_HOC (MaNamHoc);
  ALTER TABLE KQ_MON_HOC ADD FOREIGN KEY (MaMonHoc) REFERENCES MON_HOC(MaMonHoc);
@@ -217,10 +200,6 @@ CREATE TABLE MON_HOC
 
 
  ----------------------Nhập liệu--------------------------
- INSERT INTO LOAI_NGUOI_DUNG (MaLoaiNguoiDung, TenLoaiNguoiDung) VALUES
-    (1, N'Admin tổng'), 
-    (2, N'Người dùng sinh viên'),
-	(3, N'Người dùng giáo viên');
 
   INSERT INTO  HANH_KIEM (MaHanhKiem,TenHanhKiem) VALUES
     (N'Y', N'Yếu'), 
@@ -242,11 +221,6 @@ CREATE TABLE MON_HOC
  INSERT INTO  HOC_KY (MaHocKi,TenHocKi) VALUES
     (N'1', N'Học kỳ I'), 
     (N'2', N'Học kỳ II')
-	 
- INSERT INTO  KHOI_LOP(MaKhoiLop,TenKhoiLop) VALUES
-    (N'K10', N'Khối lớp 10'), 
-    (N'K11', N'Khối lớp 11'),
-	(N'K12', N'Khối lớp 12');
 
  INSERT INTO  MON_HOC(MaMonHoc,TenMonHoc,SoTiet, HeSo) VALUES
     (N'TO', N'Toán',45,3), 
@@ -257,252 +231,125 @@ CREATE TABLE MON_HOC
 
  INSERT INTO  LOAI_DIEM(MaLoai,TenLoai,HeSo) VALUES
     (N'Miệng', N'Điểm kiểm tra miệng', 1), 
-    (N'15', N'Điểm kiểm tra 15 phút', 1), 
+    (N'15p', N'Điểm kiểm tra 15 phút', 1), 
     (N'1T', N'Điểm kiểm tra 1 Tiết',2),
 	(N'HK', N'Điểm kiểm tra học kì',3);
 	
  INSERT INTO GIAO_VIEN (MaGiaoVien,	HoTen, GioiTinh, NgaySinh, NoiSinh, DiaChi, DienThoai) VALUES
     (N'T011001', N'Trương Tấn Sang', 1,'1989-01-26', N'Kiên Giang', N'182 Lương Định Của', N'0984833673'), 
-    (N'T008002', N'Hồ Thị Lan', 0,'1979-01-26', N'Hà Giang', N'178 Nguyễn Trãi', N'0983833673');
+    (N'T008002', N'Hồ Thị Lan', 0,'1979-01-26', N'Hà Giang', N'178 Nguyễn Trãi', N'0983833673'),
+	(N'T008003', N'Nguyễn Văn Chung', 1,'1979-05-26', N'Bắc Giang', N'178 Nguyễn Văn Cừ', N'0983833673'),
+	(N'T008004', N'Đỗ Thị Hạnh', 0,'1979-10-26', N'HCM', N'222 Nguyễn Trãi', N'0983833673');
 
- INSERT INTO  LOP (MaLop,TenLop,MaKhoiLop,MaNamHoc,SiSo,MaGiaoVienCN) VALUES
-    (N'K12A1', N'Lớp 12A1',N'K12',N'019',35,N'T011001'), 
-    (N'K11A2', N'Lớp 11A2',N'K11',N'019',35,N'T008002')
-	--
+ INSERT INTO  LOP (MaLop,TenLop,MaNamHoc,SiSo,MaGiaoVienCN) VALUES
+    (N'K12A1', N'12A1',N'019',4,N'T011001'),
+	(N'K11A1', N'11A1',N'018',4,N'T011001'),
+	(N'K10A1', N'10A1',N'017',4,N'T011001'),
+
+    (N'K11A1', N'11A1',N'019',3,N'T008002'),
+	(N'K10A1', N'10A1',N'018',3,N'T008002');
+
  INSERT INTO HOC_SINH (MaHocSinh, HoTen, GioiTinh, NgaySinh, NoiSinh, DiaChi, DanToc, TonGiao, TenNguoiThan) VALUES
     (N'S017001', N'Hoàng Gia An', 1,'2004-01-26', N'Hà Giang', N'182 Lê Đại Hành', N'Kinh', N'Không', N'Hoàng Hữu Thái'), 
-    (N'S018002', N'Huỳnh Gia Nghi', 0, '2005-03-26', N'Tiền Giang', N'182 An Dương Vương', N'Kinh', N'Phật', N'Lê Hữu Đạt');
-	
- INSERT INTO  HOC_SINH_LOP (MaHocSinhLop,MaHocSinh,MaLop) VALUES
-    (N'S12A101', N'S017001',N'K12A1'), 
-    (N'S11A201', N'S018002',N'K11A2');
+    (N'S017002', N'Huỳnh Gia Nghi', 0, '2005-03-26', N'Tiền Giang', N'182 An Dương Vương', N'Kinh', N'Phật', N'Lê Hữu Đạt'),
+	(N'S017003', N'Trung Đức', 1,'2004-01-26', N'Hà Giang', N'182 Lê Đại Hành', N'Kinh', N'Không', N'Hoàng Hữu Thái'), 
+    (N'S017004', N'Bảo Nghi', 0, '2005-03-26', N'Tiền Giang', N'182 An Dương Vương', N'Kinh', N'Phật', N'Lê Hữu Đạt'),
 
-INSERT INTO  GIAO_VIEN_LOP (MaGiaoVienLop,MaGiaoVien,MaLop) VALUES
-    (N'T12A101', N'T011001',N'K12A1'), 
-    (N'T11A201', N'T008002',N'K11A2');
+	(N'S018001', N'Gia An', 0,'2004-01-26', N'Hà Giang', N'182 Lê Đại Hành', N'Kinh', N'Không', N'Hoàng Hữu Thái'), 
+    (N'S018002', N'Huỳnh Nghi', 0, '2005-03-26', N'Tiền Giang', N'182 An Dương Vương', N'Kinh', N'Phật', N'Lê Hữu Đạt'),
+	(N'S018003', N'Nguyễn Anh An', 1,'2004-01-26', N'Hà Giang', N'182 Lê Đại Hành', N'Kinh', N'Không', N'Hoàng Hữu Thái'), 
+    (N'S018004', N'Lâm Nghi', 0, '2005-03-26', N'Tiền Giang', N'182 An Dương Vương', N'Kinh', N'Phật', N'Lê Hữu Đạt');
+
+	/*
+	(N'S017005', N'Hoàng Gia An', 1,'2004-01-26', N'Hà Giang', N'182 Lê Đại Hành', N'Kinh', N'Không', N'Hoàng Hữu Thái'), 
+    (N'S017006', N'Huỳnh Gia Nghi', 0, '2005-03-26', N'Tiền Giang', N'182 An Dương Vương', N'Kinh', N'Phật', N'Lê Hữu Đạt'),
+	(N'S017007', N'Trung Đức', 1,'2004-01-26', N'Hà Giang', N'182 Lê Đại Hành', N'Kinh', N'Không', N'Hoàng Hữu Thái'), 
+    (N'S017008', N'Bảo Nghi', 0, '2005-03-26', N'Tiền Giang', N'182 An Dương Vương', N'Kinh', N'Phật', N'Lê Hữu Đạt'),
+	(N'S019002', N'Phú Quốc', 1,'2004-01-26', N'Hà Giang', N'182 Lê Đại Hành', N'Kinh', N'Không', N'Hoàng Hữu Thái'), 
+    (N'S019003', N'Bùi Hiền', 1, '2005-03-26', N'Tiền Giang', N'182 An Dương Vương', N'Kinh', N'Phật', N'Lê Hữu Đạt');
+	 */
+	
+ INSERT INTO  GIAO_VIEN_LOP (MaGiaoVienLop,MaGiaoVien,MaLop, MaNamHoc) VALUES
+    (N'T12A101', N'T011001', N'K12A1', '019'), 
+	(N'T11A101', N'T011001', N'K11A1', '018'),
+	(N'T11A202', N'T011001', N'K10A1', '017'),
+	(N'T10A201', N'T008002',N'K11A1', '019');
 
  INSERT INTO  PHAN_CONG (MaPhanCong,MaGiaoVienLop,MaMonHoc) VALUES
     (N'P12A1T1', N'T12A101',N'TO'), 
-    (N'P11A2T1', N'T11A201',N'TA');
+    (N'P11A2T1', N'T11A101',N'TA');
 
- INSERT INTO  NGUOI_DUNG(MaNguoiDung,MatKhau, LoaiNguoiDung) VALUES
-    (N'Admin', N'1', 1), 
-	(N'S017001', N'1', 2),
-	(N'S018002', N'1', 2), 
-    (N'T011001', N'1', 3),
-	(N'T008002', N'1', 3);
+ INSERT INTO  NGUOI_DUNG(MaNguoiDung,MatKhau) VALUES
+    (N'Admin', N'Admin'), 
+	(N'S017001', N'S017001'),
+	(N'S018002', N'S018002'), 
+    (N'T011001', N'T011001'),
+	(N'T008002', N'T008002');
 
-	-- Học sinh có mã số S017001 là học sinh lớp 12
-	-- Học sinh có mã số S018001 là học sinh lớp 11
-INSERT INTO  DIEM(MaMonHoc, MaHocSinhLop, MaHocKi, MaNamHoc, MaLoai, Diem) VALUES
-	--Điểm của học sinh có mã số S017001 vào năm học 2017, lớp 10, học kỳ 1
-    (N'TO', N'S12A101',N'1',N'017',N'Miệng',9.5), 
-	(N'TO', N'S12A101',N'1',N'017',N'15',7), 
-	(N'TO', N'S12A101',N'1',N'017',N'1T',10), 
-	(N'TO', N'S12A101',N'1',N'017',N'HK',9.5),
-	(N'HO', N'S12A101',N'1',N'017',N'Miệng',5.5), 
-	(N'HO', N'S12A101',N'1',N'017',N'15',7), 
-	(N'HO', N'S12A101',N'1',N'017',N'1T',10), 
-	(N'HO', N'S12A101',N'1',N'017',N'HK',9.5),
-	(N'TA', N'S12A101',N'1',N'017',N'Miệng',9), 
-	(N'TA', N'S12A101',N'1',N'017',N'15',7), 
-	(N'TA', N'S12A101',N'1',N'017',N'1T',10), 
-	(N'TA', N'S12A101',N'1',N'017',N'HK',6),
-	(N'LI', N'S12A101',N'1',N'017',N'Miệng',9.5), 
-	(N'LI', N'S12A101',N'1',N'017',N'15',7), 
-	(N'LI', N'S12A101',N'1',N'017',N'1T',6), 
-	(N'LI', N'S12A101',N'1',N'017',N'HK',9.5),
-	(N'VA', N'S12A101',N'1',N'017',N'Miệng',5), 
-	(N'VA', N'S12A101',N'1',N'017',N'15',4), 
-	(N'VA', N'S12A101',N'1',N'017',N'1T',1), 
-	(N'VA', N'S12A101',N'1',N'017',N'HK',5),
-	--Điểm của học sinh có mã số S017001 vào năm học 2017, lớp 10, học kỳ 2
-	(N'TO', N'S12A101',N'2',N'017',N'Miệng',5), 
-	(N'TO', N'S12A101',N'2',N'017',N'15',9), 
-	(N'TO', N'S12A101',N'2',N'017',N'1T',10), 
-	(N'TO', N'S12A101',N'2',N'017',N'HK',5),
-	(N'HO', N'S12A101',N'2',N'017',N'Miệng',7), 
-	(N'HO', N'S12A101',N'2',N'017',N'15',7.5), 
-	(N'HO', N'S12A101',N'2',N'017',N'1T',10), 
-	(N'HO', N'S12A101',N'2',N'017',N'HK',9),
-	(N'TA', N'S12A101',N'2',N'017',N'Miệng',9), 
-	(N'TA', N'S12A101',N'2',N'017',N'15',9), 
-	(N'TA', N'S12A101',N'2',N'017',N'1T',10), 
-	(N'TA', N'S12A101',N'2',N'017',N'HK',2),
-	(N'LI', N'S12A101',N'2',N'017',N'Miệng',5.5), 
-	(N'LI', N'S12A101',N'2',N'017',N'15',7), 
-	(N'LI', N'S12A101',N'2',N'017',N'1T',6), 
-	(N'LI', N'S12A101',N'2',N'017',N'HK',5),
-	(N'VA', N'S12A101',N'2',N'017',N'Miệng',10), 
-	(N'VA', N'S12A101',N'2',N'017',N'15',10), 
-	(N'VA', N'S12A101',N'2',N'017',N'1T',1), 
-	(N'VA', N'S12A101',N'2',N'017',N'HK',6),
-	--Điểm của học sinh có mã số S017001 vào năm học 2018, lớp 11, học kỳ 2
-	(N'TO', N'S12A101',N'2',N'018',N'Miệng',5), 
-	(N'TO', N'S12A101',N'2',N'018',N'15',7), 
-	(N'TO', N'S12A101',N'2',N'018',N'1T',1), 
-	(N'TO', N'S12A101',N'2',N'018',N'HK',9.5),
-	(N'HO', N'S12A101',N'2',N'018',N'Miệng',5), 
-	(N'HO', N'S12A101',N'2',N'018',N'15',7.5), 
-	(N'HO', N'S12A101',N'2',N'018',N'1T',10), 
-	(N'HO', N'S12A101',N'2',N'018',N'HK',5),
-	(N'TA', N'S12A101',N'2',N'018',N'Miệng',9.5), 
-	(N'TA', N'S12A101',N'2',N'018',N'15',7.5), 
-	(N'TA', N'S12A101',N'2',N'018',N'1T',10), 
-	(N'TA', N'S12A101',N'2',N'018',N'HK',6),
-	(N'LI', N'S12A101',N'2',N'018',N'Miệng',5), 
-	(N'LI', N'S12A101',N'2',N'018',N'15',9), 
-	(N'LI', N'S12A101',N'2',N'018',N'1T',6), 
-	(N'LI', N'S12A101',N'2',N'018',N'HK',5),
-	(N'VA', N'S12A101',N'2',N'018',N'Miệng',5), 
-	(N'VA', N'S12A101',N'2',N'018',N'15',4.5), 
-	(N'VA', N'S12A101',N'2',N'018',N'1T',4), 
-	(N'VA', N'S12A101',N'2',N'018',N'HK',10),
-	--Điểm của học sinh có mã số S017001 vào năm học 2019, lớp 12, học kỳ 1
-    (N'TO', N'S12A101',N'1',N'019',N'Miệng',9), 
-	(N'TO', N'S12A101',N'1',N'019',N'15',7), 
-	(N'TO', N'S12A101',N'1',N'019',N'1T',1), 
-	(N'TO', N'S12A101',N'1',N'019',N'HK',9),
-	(N'HO', N'S12A101',N'1',N'019',N'Miệng',9.5), 
-	(N'HO', N'S12A101',N'1',N'019',N'15',7.5), 
-	(N'HO', N'S12A101',N'1',N'019',N'1T',6), 
-	(N'HO', N'S12A101',N'1',N'019',N'HK',9.5),
-	(N'TA', N'S12A101',N'1',N'019',N'Miệng',9), 
-	(N'TA', N'S12A101',N'1',N'019',N'15',7), 
-	(N'TA', N'S12A101',N'1',N'019',N'1T',2), 
-	(N'TA', N'S12A101',N'1',N'019',N'HK',8),
-	(N'LI', N'S12A101',N'1',N'019',N'Miệng',9), 
-	(N'LI', N'S12A101',N'1',N'019',N'15',7), 
-	(N'LI', N'S12A101',N'1',N'019',N'1T',6), 
-	(N'LI', N'S12A101',N'1',N'019',N'HK',9),
-	(N'VA', N'S12A101',N'1',N'019',N'Miệng',5), 
-	(N'VA', N'S12A101',N'1',N'019',N'15',4.5), 
-	(N'VA', N'S12A101',N'1',N'019',N'1T',7), 
-	(N'VA', N'S12A101',N'1',N'019',N'HK',9),
+INSERT INTO KQ_HOC_KY (MaHocSinhLop,	MaHocKi,	MaNamHoc,	MaHocLuc,	MaHanhKiem,	DTBHK) VALUES
+('S10A101',	'1',	'017',	'TB',	'T',	6),
+('S10A101',	'2',	'017',	'G',	'T',	8),
+('S11A101',	'1',	'018',	'K',	'T',	6.5),
+('S11A101',	'2',	'018',	'TB',	'T',	6),
+('S12A101',	'1',	'019',	'G',	'T',	9.5),
+('S12A101',	'2',	'019',	'G',	'T',	8),
+('S10A102',	'1',	'017',	'K',	'T',	7),
+('S10A102',	'2',	'017',	'TB',	'T',	6),
+('S11A102',	'1',	'018',	'G',	'T',	8),
+('S11A102',	'2',	'018',	'G',	'T',	9),
+('S12A102',	'1',	'019',	'TB',	'T',	6),
+('S12A102',	'2',	'019',	'K',	'T',	7.7),
+('S10A103',	'1',	'017',	'K',	'T',	7),
+('S10A103',	'2',	'017',	'TB',	'T',	6),
+('S11A103',	'1',	'018',	'K',	'T',	7),
+('S11A103',	'2',	'018',	'G',	'T',	10),
+('S12A103',	'1',	'019',	'G',	'T',	9),
+('S12A103',	'2',	'019',	'G',	'T',	8),
+('S10A104',	'1',	'017',	'TB',	'T',	6),
+('S10A104',	'2',	'017',	'G',	'T',	8),
+('S11A104',	'1',	'018',	'K',	'T',	6),
+('S11A104',	'2',	'018',	'K',	'T',	5),
+('S12A104',	'1',	'019',	'K',	'T',	5),
+('S12A104',	'2',	'019',	'TB',	'T',	6),
+('S11A105',	'1',	'019',	'K',	'T',	7),
+('S11A105',	'2',	'019',	'G',	'T',	9),
+('S11A106',	'1',	'019',	'G',	'T',	9),
+('S11A106',	'2',	'019',	'TB',	'T',	5),
+('S11A107',	'1',	'019',	'K',	'T',	7),
+('S11A107',	'2',    '019',	'G',	'T',	9),
+('S11A108',	'1',	'019',	'G',    'T',	8),
+('S11A108',	'2',	'019',	'G',	'T',	9);
 
-	--Điểm của học sinh có mã số S018001 vào năm học 2018, lớp 10, học kỳ 1
-	(N'TO', N'S11A201',N'1',N'018',N'Miệng',5), 
-	(N'TO', N'S11A201',N'1',N'018',N'15',8), 
-	(N'TO', N'S11A201',N'1',N'018',N'1T',10), 
-	(N'TO', N'S11A201',N'1',N'018',N'HK',7),
-	(N'HO', N'S11A201',N'1',N'018',N'Miệng',4), 
-	(N'HO', N'S11A201',N'1',N'018',N'15',8), 
-	(N'HO', N'S11A201',N'1',N'018',N'1T',10), 
-	(N'HO', N'S11A201',N'1',N'018',N'HK',9.5),
-	(N'TA', N'S11A201',N'1',N'018',N'Miệng',10), 
-	(N'TA', N'S11A201',N'1',N'018',N'15',7.5), 
-	(N'TA', N'S11A201',N'1',N'018',N'1T',1), 
-	(N'TA', N'S11A201',N'1',N'018',N'HK',6),
-	(N'LI', N'S11A201',N'1',N'018',N'Miệng',3), 
-	(N'LI', N'S11A201',N'1',N'018',N'15',7), 
-	(N'LI', N'S11A201',N'1',N'018',N'1T',5), 
-	(N'LI', N'S11A201',N'1',N'018',N'HK',9),
-	(N'VA', N'S11A201',N'1',N'018',N'Miệng',5.5), 
-	(N'VA', N'S11A201',N'1',N'018',N'15',4), 
-	(N'VA', N'S11A201',N'1',N'018',N'1T',9), 
-	(N'VA', N'S11A201',N'1',N'018',N'HK',5.5),
-    --Điểm của học sinh có mã số S018001 vào năm học 2018, lớp 10, học kỳ 2
-	(N'TO', N'S11A201',N'2',N'018',N'Miệng',5), 
-	(N'TO', N'S11A201',N'2',N'018',N'15',6.5), 
-	(N'TO', N'S11A201',N'2',N'018',N'1T',10), 
-	(N'TO', N'S11A201',N'2',N'018',N'HK',10),
-	(N'HO', N'S11A201',N'2',N'018',N'Miệng',5), 
-	(N'HO', N'S11A201',N'2',N'018',N'15',8), 
-	(N'HO', N'S11A201',N'2',N'018',N'1T',1), 
-	(N'HO', N'S11A201',N'2',N'018',N'HK',9),
-	(N'TA', N'S11A201',N'2',N'018',N'Miệng',10), 
-	(N'TA', N'S11A201',N'2',N'018',N'15',7), 
-	(N'TA', N'S11A201',N'2',N'018',N'1T',1), 
-	(N'TA', N'S11A201',N'2',N'018',N'HK',6),
-	(N'LI', N'S11A201',N'2',N'018',N'Miệng',9), 
-	(N'LI', N'S11A201',N'2',N'018',N'15',7.5), 
-	(N'LI', N'S11A201',N'2',N'018',N'1T',6.5), 
-	(N'LI', N'S11A201',N'2',N'018',N'HK',9.5),
-	(N'VA', N'S11A201',N'2',N'018',N'Miệng',5), 
-	(N'VA', N'S11A201',N'2',N'018',N'15',4), 
-	(N'VA', N'S11A201',N'2',N'018',N'1T',9), 
-	(N'VA', N'S11A201',N'2',N'018',N'HK',10),
-	--Điểm của học sinh có mã số S018001 vào năm học 2019, lớp 11, học kỳ 1
-	(N'TO', N'S11A201',N'1',N'019',N'Miệng',5), 
-	(N'TO', N'S11A201',N'1',N'019',N'15',8), 
-	(N'TO', N'S11A201',N'1',N'019',N'1T',10), 
-	(N'TO', N'S11A201',N'1',N'019',N'HK',10),
-	(N'HO', N'S11A201',N'1',N'019',N'Miệng',10), 
-	(N'HO', N'S11A201',N'1',N'019',N'15',8), 
-	(N'HO', N'S11A201',N'1',N'019',N'1T',3), 
-	(N'HO', N'S11A201',N'1',N'019',N'HK',9),
-	(N'TA', N'S11A201',N'1',N'019',N'Miệng',10), 
-	(N'TA', N'S11A201',N'1',N'019',N'15',7), 
-	(N'TA', N'S11A201',N'1',N'019',N'1T',1), 
-	(N'TA', N'S11A201',N'1',N'019',N'HK',2),
-	(N'LI', N'S11A201',N'1',N'019',N'Miệng',3), 
-	(N'LI', N'S11A201',N'1',N'019',N'15',3), 
-	(N'LI', N'S11A201',N'1',N'019',N'1T',5), 
-	(N'LI', N'S11A201',N'1',N'019',N'HK',5),
-	(N'VA', N'S11A201',N'1',N'019',N'Miệng',5), 
-	(N'VA', N'S11A201',N'1',N'019',N'15',4.5), 
-	(N'VA', N'S11A201',N'1',N'019',N'1T',10), 
-	(N'VA', N'S11A201',N'1',N'019',N'HK',5)
+INSERT INTO KQ_NAM_HOC (MaHocSinhLop,	MaHocLuc,	MaHanhKiem,	MaNamHoc,	DTBCaNam) VALUES
+('S10A101',	'K',	'T',	'017',	7.7),
+('S11A101',	'TB',	'T',	'018',	6),
+('S12A101',	'G',	'T',	'019',	8.4),
+('S10A102',	'G',	'T',	'017',	9.1),
+('S11A102',	'K',	'T',	'018',	7.4),
+('S12A102',	'K',	'T',	'019',	7.8),
+('S10A103',	'K',	'T',	'017',	7.4),
+('S11A103',	'K',	'T',	'018',	7.9),
+('S12A103',	'K',	'T',	'019',	6.9),
+('S10A104',	'K',	'T',	'017',	7),
+('S11A104',	'K',	'T',	'018',	7.8),
+('S12A104',	'G',	'T',	'019',	9.1),
+('S11A105',	'G',	'T',	'019',	8),
+('S11A106',	'G',	'T',	'019',	8),
+('S11A107',	'K',	'T',	'019',	7.6),
+('S11A108',	'K',	'T',	'019',	7.3);
 
-INSERT INTO  KQ_MON_HOC(MaHocSinhLop, MaMonHoc, MaHocKi, MaNamHoc,DTBMonHoc) VALUES
-	('S12A101', 'TO', '1', '017', 7.5),
-	('S12A101', 'HO', '1', '017', 8.5),
-	('S12A101', 'TA', '1', '017', 7),
-	('S12A101', 'LI', '1', '017', 6),
-	('S12A101', 'VA', '1', '017', 8.1),
-	('S12A101', 'TO', '2', '017', 5),
-	('S12A101', 'HO', '2', '017', 8),
-	('S12A101', 'TA', '2', '017', 7.3),
-	('S12A101', 'LI', '2', '017', 6),
-	('S12A101', 'VA', '2', '017', 8),
-	('S12A101', 'TO', '2', '018', 8.6),
-	('S12A101', 'HO', '2', '018', 6.5),
-	('S12A101', 'TA', '2', '018', 7.5),
-	('S12A101', 'LI', '2', '018', 7.3),
-	('S12A101', 'VA', '2', '018', 8),
-	('S12A101', 'TO', '1', '019', 5),
-	('S12A101', 'HO', '1', '019', 8),
-	('S12A101', 'TA', '1', '019', 7),
-	('S12A101', 'LI', '1', '019', 6),
-	('S12A101', 'VA', '1', '019', 8.9),
-
-	('S11A201', 'TO', '1', '018', 7),
-	('S11A201', 'HO', '1', '018', 6.5),
-	('S11A201', 'TA', '1', '018', 7.2),
-	('S11A201', 'LI', '1', '018', 6),
-	('S11A201', 'VA', '1', '018', 8),	
-	('S11A201', 'TO', '2', '018', 7.8),
-	('S11A201', 'HO', '2', '018', 5),
-	('S11A201', 'TA', '2', '018', 7),
-	('S11A201', 'LI', '2', '018', 6),
-	('S11A201', 'VA', '2', '018', 8),
-	('S11A201', 'TO', '1', '019', 8.5),
-	('S11A201', 'HO', '1', '019', 7.2),
-	('S11A201', 'TA', '1', '019', 7.5),
-	('S11A201', 'LI', '1', '019', 6.4),
-	('S11A201', 'VA', '1', '019', 8.4)
-
-INSERT INTO  KQ_HOC_KY(MaHocSinhLop, MaHocKi, MaNamHoc, MaHocLuc, MaHanhKiem, DTBHK) VALUES
-	('S12A101', '1', '017', 'K', 'T', 7.4),
-	('S12A101', '2', '017', 'K', 'T', 7.9),
-	('S12A101', '2', '018', 'G', 'T', 8.4),
-	('S12A101', '1', '019', 'K', 'T', 7),
-
-	('S11A201', '1', '018', 'G', 'T', 9.4),
-	('S11A201', '2', '018', 'K', 'T', 7),
-	('S11A201', '1', '019', 'TB', 'T', 6.4)
-
-INSERT INTO  KQ_NAM_HOC(MaHocSinhLop, MaHocLuc, MaHanhKiem, MaNamHoc,DTBCaNam) VALUES
-	('S12A101', 'G', 'T', '017', 8),
-	('S12A101', 'TB', 'T', '018', 6),
-
-	('S11A201', 'K', 'T', '018', 7.3)
+	-- Học sinh có mã số S017001, S017002, S017003, S017004 là học sinh lớp 12A1
+	-- Học sinh có mã số S017005, S017006, S017007, S017008 là học sinh lớp 12A2
+	-- Học sinh có mã số S018001, S018002, S018003 là học sinh lớp 11A1
+	-- Học sinh có mã số S019001, S019002, S019003 là học sinh lớp 10A1
 
 -------------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------Truy vấn-----------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------------------
 
 --Truy vấn lấy thông tin học sinh ra để load vào table tại fStudentInformation với thông tin đầy đủ
+
+
 GO
 CREATE PROC	usp_GetStudentInformationByStudentCode @MaHocSinh varchar(50)
 AS
@@ -535,4 +382,316 @@ CREATE PROC usp_UpdateStudentInformation
 AS
 BEGIN
 	UPDATE HOC_SINH SET HoTen = @HoTen, NgaySinh = @NgaySinh, GioiTinh = @GioiTinh, NoiSinh = @QueQuan, DiaChi = @DiaChi, DanToc = @DanToc, TonGiao = @TonGiao, TenNguoiThan = @NguoiThan WHERE MaHocSinh = @MaHocSinh
+END
+
+/*
+-----------------------------------------------------------------------------------------------------------------
+--Hàm phụ, lấy ra Mã lớp học từ bảng LOP_HOP để nhập cho MaHocSinhLop bảng HOC_SINH_LOP
+CREATE PROC usp_GetIDClassStudent @TenLop nvarchar(50), @MaLopHoc nvarchar(50) out
+AS
+--BEGIN
+	  SELECT MaLop = @MaLopHoc FROM LOP WHERE TenLop = '12A1'
+	  SET @MaLopHoc = 'k12a1'
+--END
+-----------------------------------------------------------------------------------------------------------------
+*/
+--Cập nhật tên đăng nhập và mật khẩu cho học sinh mới thêm
+CREATE PROC usp_AddAccountStudent @MaHocSinh nvarchar(50)
+AS
+BEGIN
+	INSERT INTO  NGUOI_DUNG(MaNguoiDung,MatKhau) VALUES
+    (@MaHocSinh, @MaHocSinh)
+END
+
+
+--Cập nhật lớp cho học sinh mới thêm
+CREATE PROC usp_AddClassStudent @MaHocSinhLop nvarchar(50), @MaHocSinh nvarchar(50), @TenLop nvarchar(50), @MaNamHoc nvarchar(50)
+AS
+BEGIN
+	DECLARE @MaLop nvarchar(50)
+	--EXEC usp_GetIDClassStudent @Tenlop, @MaLop
+	SET @MaLop = N'K12A1'
+	INSERT INTO  HOC_SINH_LOP (MaHocSinhLop,MaHocSinh,MaLop, MaNamHoc) VALUES
+    (@MaHocSinhLop, @MaHocSinh, @MaLop, @MaNamHoc);
+END
+
+
+--Cập nhật bảng điểm cho học sinh mới được thêm
+CREATE PROC usp_AddScoreStudent @MaHocSinhLop nvarchar(50), @MaNamHoc nvarchar(50)
+AS
+BEGIN
+	INSERT INTO  DIEM (MaMonHoc,MaHocSinhLop,MaHocKi, MaNamHoc, MaLoai, Diem) VALUES
+    ('TO', @MaHocSinhLop, '1', @MaNamHoc, N'Miệng', null),
+	('TO', @MaHocSinhLop, '1', @MaNamHoc, '15p', null),
+	('TO', @MaHocSinhLop, '1', @MaNamHoc, '1T', null),
+	('TO', @MaHocSinhLop, '1', @MaNamHoc, 'HK', null),
+	('HO', @MaHocSinhLop, '1', @MaNamHoc, N'Miệng', null),
+	('HO', @MaHocSinhLop, '1', @MaNamHoc, '15p', null),
+	('HO', @MaHocSinhLop, '1', @MaNamHoc, '1T', null),
+	('HO', @MaHocSinhLop, '1', @MaNamHoc, 'HK', null),
+    ('TA', @MaHocSinhLop, '1', @MaNamHoc, N'Miệng', null),
+	('TA', @MaHocSinhLop, '1', @MaNamHoc, '15p', null),
+	('TA', @MaHocSinhLop, '1', @MaNamHoc, '1T', null),
+	('TA', @MaHocSinhLop, '1', @MaNamHoc, 'HK', null),
+	('LI', @MaHocSinhLop, '1', @MaNamHoc, N'Miệng', null),
+	('LI', @MaHocSinhLop, '1', @MaNamHoc, '15p', null),
+	('LI', @MaHocSinhLop, '1', @MaNamHoc, '1T', null),
+	('LI', @MaHocSinhLop, '1', @MaNamHoc, 'HK', null),
+	('VA', @MaHocSinhLop, '1', @MaNamHoc, N'Miệng', null),
+	('VA', @MaHocSinhLop, '1', @MaNamHoc, '15p', null),
+	('VA', @MaHocSinhLop, '1', @MaNamHoc, '1T', null),
+	('VA', @MaHocSinhLop, '1', @MaNamHoc, 'HK', null),
+	
+	('TO', @MaHocSinhLop, '2', @MaNamHoc, N'Miệng', null),
+	('TO', @MaHocSinhLop, '2', @MaNamHoc, '15p', null),
+	('TO', @MaHocSinhLop, '2', @MaNamHoc, '1T', null),
+	('TO', @MaHocSinhLop, '2', @MaNamHoc, 'HK', null),
+	('HO', @MaHocSinhLop, '2', @MaNamHoc, N'Miệng', null),
+	('HO', @MaHocSinhLop, '2', @MaNamHoc, '15p', null),
+	('HO', @MaHocSinhLop, '2', @MaNamHoc, '1T', null),
+	('HO', @MaHocSinhLop, '2', @MaNamHoc, 'HK', null),
+    ('TA', @MaHocSinhLop, '2', @MaNamHoc, N'Miệng', null),
+	('TA', @MaHocSinhLop, '2', @MaNamHoc, '15p', null),
+	('TA', @MaHocSinhLop, '2', @MaNamHoc, '1T', null),
+	('TA', @MaHocSinhLop, '2', @MaNamHoc, 'HK', null),
+	('LI', @MaHocSinhLop, '2', @MaNamHoc, N'Miệng', null),
+	('LI', @MaHocSinhLop, '2', @MaNamHoc, '15p', null),
+	('LI', @MaHocSinhLop, '2', @MaNamHoc, '1T', null),
+	('LI', @MaHocSinhLop, '2', @MaNamHoc, 'HK', null),
+	('VA', @MaHocSinhLop, '2', @MaNamHoc, N'Miệng', null),
+	('VA', @MaHocSinhLop, '2', @MaNamHoc, '15p', null),
+	('VA', @MaHocSinhLop, '2', @MaNamHoc, '1T', null),
+	('VA', @MaHocSinhLop, '2', @MaNamHoc, 'HK', null);
+END
+
+--Cập nhật điểm học kỳ cho học sinh mới được thêm
+CREATE PROC usp_AddTermScoreStudent @MaHocSinhLop nvarchar(50), @MaNamHoc nvarchar(50)
+AS
+BEGIN
+	INSERT INTO  KQ_HOC_KY(MaHocSinhLop,MaHocKi, MaNamHoc, MaHocLuc, MaHanhKiem, DTBHK) VALUES
+	(@MaHocSinhLop, '1', @MaNamHoc, null, null, null),
+	(@MaHocSinhLop, '2', @MaNamHoc, null, null, null);
+END
+
+--Cập nhật điểm môn học cho học sinh mới được thêm
+CREATE PROC usp_AddSubjectScoreStudent @MaHocSinhLop nvarchar(50), @MaNamHoc nvarchar(50)
+AS
+BEGIN
+	INSERT INTO  KQ_MON_HOC(MaHocSinhLop,MaMonHoc, MaHocKi, MaNamHoc, DTBMonHoc) VALUES
+	(@MaHocSinhLop, 'TO', '1', @MaNamHoc, null),
+	(@MaHocSinhLop, 'HO', '1', @MaNamHoc, null),
+	(@MaHocSinhLop, 'TA', '1', @MaNamHoc, null),
+	(@MaHocSinhLop, 'LI', '1', @MaNamHoc, null),
+	(@MaHocSinhLop, 'VA', '1', @MaNamHoc, null),
+	(@MaHocSinhLop, 'TO', '2', @MaNamHoc, null),
+	(@MaHocSinhLop, 'HO', '2', @MaNamHoc, null),
+	(@MaHocSinhLop, 'TA', '2', @MaNamHoc, null),
+	(@MaHocSinhLop, 'LI', '2', @MaNamHoc, null),
+	(@MaHocSinhLop, 'VA', '2', @MaNamHoc, null);
+END
+
+--Cập nhật điểm trung bình của cả năm học cho học sinh mới được thêm
+CREATE PROC usp_AddAcademicScoreStudent @MaHocSinhLop nvarchar(50), @MaNamHoc nvarchar(50)
+AS
+BEGIN
+	INSERT INTO  KQ_NAM_HOC(MaHocSinhLop,MaHocLuc, MaHanhKiem, MaNamHoc, DTBCaNam) VALUES
+	(@MaHocSinhLop, null, null, @MaNamHoc, null);
+END
+
+--Lấy ra danh sách học sinh
+CREATE PROC usp_GetListStudent @TenLop nvarchar(50), @MaNamHoc nvarchar(50)
+AS
+BEGIN
+	SELECT HS.MaHocSinh AS N'Mã học sinh', HS.HoTen N'Họ tên học sinh'
+	FROM HOC_SINH_LOP HSL, HOC_SINH HS, LOP
+	WHERE HSL.MaHocSinh = HS.MaHocSinh AND HSL.MaLop = LOP.MaLop AND LOP.TenLop = @TenLop AND HSL.MaNamHoc = @MaNamHoc
+END
+
+--Lấy điểm chi tiết từng môn học cho bảng giáo viên của học sinh được chọn
+CREATE PROC usp_GetScoreStudentForTeacher @MaHocSinh nvarchar(50), @MaNamHoc nvarchar(50), @MaHocKy nvarchar(50)
+AS
+BEGIN
+	SELECT DIEM.Diem
+	FROM DIEM, HOC_SINH_LOP HSL
+	WHERE DIEM.MaHocSinhLop = HSL.MaHocSinhLop AND HSL.MaHocSinh = @MaHocSinh AND DIEM.MaHocKi = @MaHocKy AND DIEM.MaNamHoc = @MaNamHoc
+END
+
+--Lấy tên hạnh kiểm của học sinh được chọn
+CREATE PROC usp_GetConductStudent @MaHocSinh nvarchar(50), @MaHocKy nvarchar(50), @MaNamHoc nvarchar(50)
+AS
+BEGIN
+	SELECT DISTINCT HK.TenHanhKiem
+	FROM HOC_SINH_LOP HSL, KQ_HOC_KY KQHK, HANH_KIEM HK
+	WHERE HSL.MaHocSinhLop = KQHK.MaHocSinhLop AND HSL.MaHocSinh = @MaHocSinh AND KQHK.MaHocKi = @MaHocKy AND KQHK.MaNamHoc = @MaNamHoc AND KQHK.MaHanhKiem = HK.MaHanhKiem
+END
+
+--Thêm một học sinh mới
+CREATE PROC usp_AddNewStudent
+@TenHocSinh nvarchar(50), @MaHocSinh nvarchar(50), @TenLop nvarchar(50), @MaHocSinhLop nvarchar(50), @MaNamHoc nvarchar(50), @MaHocKy nvarchar(50)
+AS
+BEGIN
+	 INSERT INTO HOC_SINH (MaHocSinh, HoTen, GioiTinh, NgaySinh, NoiSinh, DiaChi, DanToc, TonGiao, TenNguoiThan) VALUES
+     (@MaHocSinh, @TenHocSinh, null,null, null, null, null, null, null);
+
+	 EXEC usp_AddClassStudent @MaHocSinhLop, @MaHocSinh, @TenLop, @MaNamHoc
+
+	 EXEC usp_AddAccountStudent @MaHocSinh
+
+	 EXEC usp_AddScoreStudent @MaHocSinhLop, @MaNamHoc
+
+	 EXEC usp_AddTermScoreStudent @MaHocSinhLop, @MaNamHoc
+
+	 EXEC usp_AddSubjectScoreStudent @MaHocSinhLop, @MaNamHoc
+
+	 EXEC usp_AddAcademicScoreStudent @MaHocSinhLop, @MaNamHoc
+END
+
+
+--Cập nhật bảng điểm chi tiết cho học sinh
+CREATE PROC usp_EditScoreStudent
+@MaHocSinhLop nvarchar(50), @MaNamHoc nvarchar(50), @HocKi nvarchar(50),
+@TOMieng float, @TO15p float, @TO1T float, @TOHK float,
+@HOMieng float, @HO15p float, @HO1T float, @HOHK float,
+@TAMieng float, @TA15p float, @TA1T float, @TAHK float,
+@LIMieng float, @LI15p float, @LI1T float, @LIHK float,
+@VAMieng float, @VA15p float, @VA1T float, @VAHK float
+AS
+BEGIN
+	UPDATE  DIEM SET
+    Diem =  @TOMieng
+	WHERE MaMonHoc = 'TO' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = N'Miệng';
+	UPDATE  DIEM SET
+	Diem =  @TO15p
+	WHERE MaMonHoc = 'TO' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = '15p';
+	UPDATE  DIEM SET
+	Diem =  @TO1T
+	WHERE MaMonHoc = 'TO' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = '1T';
+	UPDATE  DIEM SET
+	Diem =  @TOHK
+	WHERE MaMonHoc = 'TO' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = 'HK';
+	UPDATE  DIEM SET
+    Diem =  @HOMieng
+	WHERE MaMonHoc = 'HO' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = N'Miệng';
+	UPDATE  DIEM SET
+	Diem =  @HO15p
+	WHERE MaMonHoc = 'HO' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = '15p';
+	UPDATE  DIEM SET
+	Diem =  @HO1T
+	WHERE MaMonHoc = 'HO' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = '1T';
+	UPDATE  DIEM SET
+	Diem =  @HOHK
+	WHERE MaMonHoc = 'HO' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = 'HK';
+	UPDATE  DIEM SET
+    Diem =  @TAMieng
+	WHERE MaMonHoc = 'TA' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = N'Miệng';
+	UPDATE  DIEM SET
+	Diem =  @TA15p
+	WHERE MaMonHoc = 'TA' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = '15p';
+	UPDATE  DIEM SET
+	Diem =  @TA1T
+	WHERE MaMonHoc = 'TA' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = '1T';
+	UPDATE  DIEM SET
+	Diem =  @TAHK
+	WHERE MaMonHoc = 'TA' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = 'HK';
+	UPDATE  DIEM SET
+    Diem =  @LIMieng 
+	WHERE MaMonHoc = 'LI' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = N'Miệng';
+	UPDATE  DIEM SET
+	Diem =  @LI15p
+	WHERE MaMonHoc = 'LI' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = '15p';
+	UPDATE  DIEM SET
+	Diem =  @LI1T
+	WHERE MaMonHoc = 'LI' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = '1T';
+	UPDATE  DIEM SET
+	Diem =  @LIHK
+	WHERE MaMonHoc = 'LI' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = 'HK';
+	UPDATE  DIEM SET
+    Diem =  @VAMieng
+	WHERE MaMonHoc = 'VA' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = N'Miệng';
+	UPDATE  DIEM SET
+	Diem =  @VA15p
+	WHERE MaMonHoc = 'VA' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = '15p';
+	UPDATE  DIEM SET
+	Diem =  @VA1T 
+	WHERE MaMonHoc = 'VA' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = '1T';
+	UPDATE  DIEM SET
+	Diem =  @VAHK
+	WHERE MaMonHoc = 'VA' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = 'HK';
+END
+
+--Cập nhật điểm môn học cho học sinh
+CREATE PROC usp_EditSubjectScoreStudent
+@MaHocSinhLop nvarchar(50), @MaNamHoc nvarchar(50), @MaHocKi nvarchar(50),
+@TO float, @HO float, @TA float, @LI float, @VA float
+AS
+BEGIN
+	UPDATE KQ_MON_HOC SET
+	DTBMonHoc = @TO
+	WHERE MaHocSinhLop = @MaHocSinhLop AND MaMonHoc = 'TO' AND MaHocKi = @MaHocKi AND MaNamHoc = @MaNamHoc;
+	UPDATE KQ_MON_HOC SET
+	DTBMonHoc = @HO
+	WHERE MaHocSinhLop = @MaHocSinhLop AND MaMonHoc = 'HO' AND MaHocKi = @MaHocKi AND MaNamHoc = @MaNamHoc;
+	UPDATE KQ_MON_HOC SET
+	DTBMonHoc = @TA
+	WHERE MaHocSinhLop = @MaHocSinhLop AND MaMonHoc = 'TA' AND MaHocKi = @MaHocKi AND MaNamHoc = @MaNamHoc;
+	UPDATE KQ_MON_HOC SET
+	DTBMonHoc = @LI
+	WHERE MaHocSinhLop = @MaHocSinhLop AND MaMonHoc = 'LI' AND MaHocKi = @MaHocKi AND MaNamHoc = @MaNamHoc;
+	UPDATE KQ_MON_HOC SET
+	DTBMonHoc = @VA
+	WHERE MaHocSinhLop = @MaHocSinhLop AND MaMonHoc = 'VA' AND MaHocKi = @MaHocKi AND MaNamHoc = @MaNamHoc;
+END
+
+--Cập nhật điểm học kỳ cho học sinh
+CREATE PROC usp_EditTermScoreStudent
+@MaHocSinhLop nvarchar(50), @MaNamHoc nvarchar(50), @MaHocKi nvarchar(50), @Score float, @MaHocLuc nvarchar(50), @MaHanhKiem nvarchar(50)
+AS
+BEGIN
+	UPDATE KQ_HOC_KY SET
+	DTBHK = @Score, MaHocLuc = @MaHocLuc, MaHanhKiem = @MaHanhKiem
+	WHERE MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @MaHocKi AND MaNamHoc = @MaNamHoc;
+END
+
+--Cập nhật điểm nawm học cho học sinh
+CREATE PROC usp_EditAcademicScoreStudent
+@MaHocSinhLop nvarchar(50), @MaNamHoc nvarchar(50), @Score float, @MaHocLuc nvarchar(50), @MaHanhKiem nvarchar(50)
+AS
+BEGIN
+	UPDATE KQ_NAM_HOC SET
+	DTBCaNam = @Score, MaHocLuc = @MaHocLuc, MaHanhKiem = @MaHanhKiem
+	WHERE MaHocSinhLop = @MaHocSinhLop AND MaNamHoc = @MaNamHoc;
+END
+
+
+
+--Lấy ra mã học sinh lớp lớn nhất để tự động tạo mã học sinh lớp cho học sinh mới được thêm
+CREATE PROC usp_GetClassStu
+@MaLop nvarchar(50), @MaNamHoc nvarchar(50)
+AS
+BEGIN
+	SELECT TOP 1 MaHocSinhLop
+	FROM HOC_SINH_LOP
+	WHERE MaNamHoc = @MaNamHoc AND MaLop = @MaLop
+	ORDER BY MaHocSinhLop DESC
+END
+
+
+--Lấy ra mã học sinh lớn nhất để tự động tạo mã học sinh cho học sinh mới được thêm
+CREATE PROC usp_GetCodeStu
+@MaLop nvarchar(50), @MaNamHoc nvarchar(50)
+AS
+BEGIN
+	SELECT TOP 1 MaHocSinh
+	FROM HOC_SINH_LOP
+	WHERE MaNamHoc = @MaNamHoc AND MaLop = @MaLop
+	ORDER BY MaHocSinh DESC
+END
+
+--Lấy ra mã học sinh lớp của một học sinh nhập vào
+CREATE PROC usp_GetCodeStudent @MaHocSinh nvarchar(50), @MaNamHoc nvarchar(50), @MaLop nvarchar(50)
+AS
+BEGIN
+	SELECT MaHocSinhLop
+	FROM HOC_SINH_LOP
+	WHERE MaHocSinh = @MaHocSinh AND MaNamHoc = @MaNamHoc AND MaLop = @MaLop
 END

@@ -37,5 +37,13 @@ namespace QuanLyHocSinh.DAO
 
             return Infor;
         }
+
+        public DataTable LoadListStudent(string ClassName, string Academic)
+        {
+            DataTable data = DataProvider.Instance.ExecuteQuery("usp_GetListStudent @TenLop='" + ClassName + "', @MaNamHoc='" + Academic + "'");
+
+            return data;
+        }
+
     }
 }

@@ -10,7 +10,7 @@ namespace QuanLyHocSinh.DTO
 {
     public class Point
     {
-        public string[] GetScores(string MaHocSinh,string MaHocKy,string MaNamHoc)
+        public string[] GetScores(string MaHocSinh, string MaHocKy, string MaNamHoc)
         {
             DataTable data = PointDAO.Instance.GetTablepoint(MaHocSinh, MaHocKy, MaNamHoc);
             int temp = data.Rows.Count;
@@ -33,7 +33,7 @@ namespace QuanLyHocSinh.DTO
 
             int i = 0, j = 0;
 
-            result[i++]= data.Rows[0][3].ToString();
+            result[i++] = data.Rows[0][3].ToString();
 
             while (i < temp)
             {
@@ -46,6 +46,85 @@ namespace QuanLyHocSinh.DTO
             }
 
             return result;
+        }
+
+        public string[] GetScoreForTeacher(string MaHocSinh, string MaHocKy, string MaNamHoc)
+        {
+            string[] item = new string[20];
+
+            DataTable data = PointDAO.Instance.GetScoreForTeacher(MaHocSinh, MaHocKy, MaNamHoc);
+
+            for (int i = 0; i < 20; i++)
+                item[i] = data.Rows[i][0].ToString();
+
+            return item;
+        }
+
+        public void EditAllScoreStudent(string[] item, string MaHocSinhLop, string MaNamHoc, string MaHocKi)
+        {
+            string[] result = new string[8];
+            float temp = 0;
+
+            int j = 0;
+
+            //lưu điểm trung bình của 5 môn học
+            for (int i = 0; i < 20;)
+            {
+                result[j] = (1.0 * (Convert(item[i++]) + Convert(item[i++]) + Convert(item[i++]) * 2 + Convert(item[i++]) * 3) / 7).ToString();
+
+                temp += Convert(result[j++]);
+            }
+
+            //lưu điểm trung bình học kỳ của học sinh
+            result[j] = (temp / 5).ToString();
+
+            //lưu học lực của học sinh
+            if (Convert(result[j]) > 8)
+                result[++j] = "G";
+            else
+            {
+                if (Convert(result[j]) > 6.5)
+                    result[++j] = "K";
+                else
+                {
+                    if (Convert(result[j]) > 5)
+                        result[++j] = "TB";
+                    else
+                        result[++j] = "Y";
+                }
+            }
+
+            //lưu hạnh kiểm của học sinh
+            if (item[item.Length - 1] == "Tốt")
+                result[++j] = "T";
+            else
+            {
+                if (item[item.Length - 1] == "Khá")
+                    result[++j] = "K";
+                else
+                {
+                    if (item[item.Length - 1] == "Trung bình")
+                        result[++j] = "TB";
+                    else
+                        result[++j] = "Y";
+                }
+            }
+          
+            PointDAO.Instance.EditScoreStudent(item, MaHocSinhLop, MaNamHoc, MaHocKi);
+
+            PointDAO.Instance.EditSubjectScoreStudent(result, MaHocSinhLop, MaNamHoc, MaHocKi);
+
+            PointDAO.Instance.EditTermScoreStudent(result, MaHocSinhLop, MaNamHoc, MaHocKi);
+        }
+
+        float Convert(string str)
+        {
+            return float.Parse(str);
+        }
+
+        public string GetCodeClassStudent(string MaHocSinh, string MaNamHoc, string MaLop)
+        {
+             return PointDAO.Instance.GetCodeClassStudent(MaHocSinh, MaNamHoc, MaLop).Rows[0][0].ToString();
         }
     }
 }
