@@ -21,3 +21,4 @@ C:\Users\TrungDuc\Documents\Visual Studio 2015\Projects\QuanLyHocSinh\Quan-ly-ho
 C:\Users\TrungDuc\Documents\Visual Studio 2015\Projects\QuanLyHocSinh\Quan-ly-hoc-sinh\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.Properties.Resources.resources
 C:\Users\TrungDuc\Documents\Visual Studio 2015\Projects\QuanLyHocSinh\Quan-ly-hoc-sinh\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.csproj.GenerateResource.Cache
 C:\Users\TrungDuc\Documents\Visual Studio 2015\Projects\QuanLyHocSinh\Quan-ly-hoc-sinh\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.fTeacher.resources
+C:\Users\TrungDuc\Documents\Visual Studio 2015\Projects\QuanLyHocSinh\Quan-ly-hoc-sinh\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.AdTableManager.resources

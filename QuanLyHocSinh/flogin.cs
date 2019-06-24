@@ -45,6 +45,15 @@ namespace QuanLyHocSinh
                     f.ShowDialog();
                     this.Show();
                 }
+
+                if (username[0] == 'A')
+                {
+                    AdTableManager f = new AdTableManager(txbUseName.Text);
+                    this.Hide();
+                    f.ShowDialog();
+                    this.Show();
+                }
+     
                 else
                 {
                     fTableManager f = new fTableManager(txbUseName.Text);

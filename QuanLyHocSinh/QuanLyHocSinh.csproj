@@ -46,13 +46,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdTableManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdTableManager.Designer.cs">
+      <DependentUpon>AdTableManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="DAO\AccountDAO.cs" />
     <Compile Include="DAO\AddNewStudentDAO.cs" />
+    <Compile Include="DAO\AdminDAO.cs" />
     <Compile Include="DAO\ConductDAO.cs" />
     <Compile Include="DAO\DataProvider.cs" />
     <Compile Include="DAO\PointDAO.cs" />
     <Compile Include="DAO\StudentInformationDAO.cs" />
     <Compile Include="DAO\UpdateInforDAO.cs" />
+    <Compile Include="DTO\AdminInformation.cs" />
     <Compile Include="DTO\Point.cs" />
     <Compile Include="DTO\StudentInformation.cs" />
     <Compile Include="fEditInformation.cs">
@@ -81,6 +89,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AdTableManager.resx">
+      <DependentUpon>AdTableManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="fEditInformation.resx">
       <DependentUpon>fEditInformation.cs</DependentUpon>
     </EmbeddedResource>

@@ -403,7 +403,7 @@ BEGIN
     (@MaHocSinh, @MaHocSinh)
 END
 
-
+GO
 --Cập nhật lớp cho học sinh mới thêm
 CREATE PROC usp_AddClassStudent @MaHocSinhLop nvarchar(50), @MaHocSinh nvarchar(50), @TenLop nvarchar(50), @MaNamHoc nvarchar(50)
 AS
@@ -694,4 +694,206 @@ BEGIN
 	SELECT MaHocSinhLop
 	FROM HOC_SINH_LOP
 	WHERE MaHocSinh = @MaHocSinh AND MaNamHoc = @MaNamHoc AND MaLop = @MaLop
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------Chức năng Admin----------------------------------------------------------------------
+-- Thêm một tài khoản người dùng mới
+GO
+CREATE PROC usp_AddAccount @MaNguoiDung nvarchar(50), @MatKhau nvarchar(50)
+AS
+BEGIN
+	INSERT INTO  NGUOI_DUNG(MaNguoiDung,MatKhau) VALUES
+    (@MaNguoiDung, @MatKhau)
+END
+
+-- Chỉnh sửa mật khẩu người dùng
+GO
+CREATE PROC usp_EditAccount @MaNguoiDung nvarchar(50), @MatKhau nvarchar(50)
+AS
+BEGIN
+	UPDATE  NGUOI_DUNG SET MatKhau= @MatKhau WHERE MaNguoiDung = @MaNguoiDung
+END
+
+-- Xóa tài khoản người dùng
+GO
+CREATE PROC usp_DeleteAccount @MaNguoiDung nvarchar(50)
+AS
+BEGIN
+	DELETE FROM  NGUOI_DUNG WHERE MaNguoiDung = @MaNguoiDung
+END
+
+-- Thêm Giáo viên
+GO
+CREATE PROC usp_AddTeacher @MaGiaoVien nvarchar(50),@HoTen nvarchar(50),@GioiTinh bit,@NgaySinh date,@NoiSinh nvarchar(50),@DiaChi nvarchar(50),@DienThoai nvarchar(50)
+AS
+BEGIN
+	 INSERT INTO GIAO_VIEN(MaGiaoVien,HoTen,GioiTinh,NgaySinh,NoiSinh,DiaChi ,DienThoai) VALUES
+     (@MaGiaoVien,@HoTen,@GioiTinh,@NgaySinh,@NoiSinh,@DiaChi,@DienThoai);
+END
+
+-- Cập nhập giáo viên
+GO
+CREATE PROC usp_UpdateTeacher @MaGiaoVien nvarchar(50),@HoTen nvarchar(50),@GioiTinh bit,@NgaySinh date,@NoiSinh nvarchar(50),@DiaChi nvarchar(50),@DienThoai nvarchar(50)
+AS
+BEGIN
+	 UPDATE GIAO_VIEN SET  HoTen= @HoTen, GioiTinh = @GioiTinh, NgaySinh = @NgaySinh, NoiSinh = @NoiSinh,DiaChi = @DiaChi , DienThoai = @DienThoai Where MaGiaoVien = @MaGiaoVien
+END
+
+-- Xoa phan cong
+GO
+CREATE PROC usp_DeleteAssigned @MaPhanCong nvarchar(50)
+AS
+BEGIN
+	 DELETE FROM PHAN_CONG WHERE MaPhanCong = @MaPhanCong
+END
+
+-- Xoa giao vien lop
+GO
+CREATE PROC usp_DeleteTeacherOfClass @MaGiaoVienLop nvarchar(50)
+AS
+BEGIN
+	DECLARE @MaPhanCong nvarchar(50)
+    SELECT @MaPhanCong=MaPhanCong FROM PHAN_CONG WHERE MaGiaoVienLop = @MaGiaoVienLop
+	EXEC usp_DeleteAssigned @MaPhanCong
+	 DELETE FROM GIAO_VIEN_LOP WHERE MaGiaoVienLop = @MaGiaoVienLop
+	 
+END
+
+-- Xoa giao vien
+GO
+CREATE PROC usp_DeleteTeacher @MaGiaoVien nvarchar(50)
+AS
+BEGIN
+DECLARE @MaGiaoVienLop nvarchar(50)
+    SELECT @MaGiaoVienLop=MaGiaoVienLop FROM GIAO_VIEN_LOP WHERE MaGiaoVien = @MaGiaoVien
+	EXEC usp_DeleteTeacherOfClass @MaGiaoVienLop
+	 DELETE FROM GIAO_VIEN WHERE MaGiaoVien = @MaGiaoVien
+END
+
+
+-- Thêm giáo viên lớp
+GO
+CREATE PROC usp_AddTeacherOfStudent @MaGiaoVienLop nvarchar(50),@MaGiaoVien nvarchar(50),@MaLop nvarchar(50),@MaNamHoc nvarchar(50)
+AS
+BEGIN
+	 INSERT INTO GIAO_VIEN_LOP(MaGiaoVienLop,MaGiaoVien,MaLop,MaNamHoc) VALUES
+     (@MaGiaoVienLop,@MaGiaoVien,@MaLop,@MaNamHoc);
+END
+
+-- Cập nhập giáo viên lop
+GO
+CREATE PROC usp_UpdateTeacherOfClass @MaGiaoVienLop nvarchar(50),@MaGiaoVien nvarchar(50),@MaLop nvarchar(50),@MaNamHoc nvarchar(50)
+AS
+BEGIN
+	 UPDATE GIAO_VIEN_LOP SET  MaGiaoVien= @MaGiaoVien, MaLop = @MaLop, MaNamHoc = @MaNamHoc Where MaGiaoVienLop = @MaGiaoVienLop
+END
+
+
+-- Thêm phân công
+GO
+CREATE PROC usp_AddAssigned @MaPhanCong nvarchar(50),@MaGiaoVienLop nvarchar(50),@MaMonHoc nvarchar(50)
+AS
+BEGIN
+	 INSERT INTO PHAN_CONG(MaPhanCong,MaGiaoVienLop,MaMonHoc) VALUES
+     (@MaPhanCong,@MaGiaoVienLop,@MaMonHoc);
+END
+
+-- Cập nhập phan cong
+GO
+CREATE PROC usp_UpdateAssigned @MaPhanCong nvarchar(50),@MaGiaoVienLop nvarchar(50),@MaMonHoc nvarchar(50)
+AS
+BEGIN
+	 UPDATE PHAN_CONG SET  MaGiaoVienLop= @MaGiaoVienLop, MaMonHoc = @MaMonHoc Where MaPhanCong = @MaPhanCong
+END
+
+-- Them 1 hs
+GO
+CREATE PROC usp_AddStudentAm
+@MaHocSinh nvarchar(50), @HoTen nvarchar(50), @GioiTinh bit,
+@NgaySinh date, @QueQuan nvarchar(50), @DiaChi nvarchar(50),
+@DanToc nvarchar(50), @TonGiao nvarchar(50), @NguoiThan nvarchar(50)
+AS
+BEGIN
+	INSERT INTO HOC_SINH ( MaHocSinh, HoTen, NgaySinh, GioiTinh,  NoiSinh, DiaChi , DanToc, TonGiao , TenNguoiThan)VALUES
+						(@MaHocSinh, @HoTen,  @NgaySinh, @GioiTinh, @QueQuan, @DiaChi, @DanToc, @TonGiao, @NguoiThan)
+END
+
+-- Xóa điểm của một học sinh
+GO
+CREATE PROC usp_DeletePointAm @MaHocSinhLop nvarchar(50)
+AS
+BEGIN
+	 DELETE FROM DIEM WHERE MaHocSinhLop = @MaHocSinhLop
+END
+
+-- Xóa điểm môn học của một học sinh
+GO
+CREATE PROC usp_DeletePointSubjectAm @MaHocSinhLop nvarchar(50)
+AS
+BEGIN
+	 DELETE FROM KQ_MON_HOC WHERE MaHocSinhLop = @MaHocSinhLop
+END
+
+-- Xóa kết quả học kì của một học sinh
+GO
+CREATE PROC usp_DeletePointHKAm @MaHocSinhLop nvarchar(50)
+AS
+BEGIN
+	 DELETE FROM KQ_HOC_KY WHERE MaHocSinhLop = @MaHocSinhLop
+END
+
+-- Xóa kết quả năm học của một học sinh
+GO
+CREATE PROC usp_DeleteYearAm @MaHocSinhLop nvarchar(50)
+AS
+BEGIN
+
+	 DELETE FROM KQ_NAM_HOC WHERE MaHocSinhLop = @MaHocSinhLop
+	 
+END
+
+-- Xóa học sinh lớp
+GO
+CREATE PROC usp_DeleteStudentClassAm @MaHocSinhLop nvarchar(50)
+AS
+BEGIN
+
+	 DELETE FROM HOC_SINH_LOP WHERE MaHocSinhLop = @MaHocSinhLop
+	 EXEC usp_DeleteYearAm @MaHocSinhLop
+	 EXEC usp_DeletePointHKAm @MaHocSinhLop
+	 EXEC usp_DeletePointSubjectAm @MaHocSinhLop
+	 EXEC usp_DeletePointAm @MaHocSinhLop
+END
+
+--Xóa học sinh
+GO
+CREATE PROC usp_DeleteStudnetAm @MaHocSinh nvarchar(50)
+AS
+BEGIN
+
+DECLARE @MaNguoiDung nvarchar(50)
+    SELECT @MaNguoiDung=MaNguoiDung FROM NGUOI_DUNG WHERE MaNguoiDung = @MaHocSinh
+	EXEC usp_DeleteAccount @MaNguoiDung
+
+	DECLARE @MaHocSinhLop nvarchar(50)
+    SELECT @MaHocSinhLop=MaHocSinhLop FROM HOC_SINH_LOP WHERE MaHocSinh = @MaHocSinh
+	EXEC usp_DeleteStudentClassAm @MaNguoiDung
+
+	 DELETE FROM HOC_SINH WHERE MaHocSinh = @MaHocSinh
 END
