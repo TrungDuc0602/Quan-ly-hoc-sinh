@@ -45,3 +45,4 @@ D:\Đồ án PTTK\a\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.csproj.GenerateResourc
 D:\Đồ án PTTK\a\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.csproj.CoreCompileInputs.cache
 D:\Đồ án PTTK\a\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.exe
 D:\Đồ án PTTK\a\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.pdb
+C:\Users\TrungDuc\Documents\Visual Studio 2015\Projects\QuanLyHocSinh\Quan-ly-hoc-sinh\QuanLyHocSinh\obj\Debug\QuanLyHocSinh.AdTableManager.resources

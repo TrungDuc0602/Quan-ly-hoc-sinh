@@ -121,14 +121,14 @@ namespace QuanLyHocSinh.DAO
         public void SaveTaecher(string MaGiaoVien, string HoTen, bool GioiTinh, DateTime NgaySinh, string NoiSinh, string DiaChi, string DienThoai)
         {
 
-            DataProvider.Instance.ExecuteQuery("usp_AddTeacher @MaGiaoVien = '" + MaGiaoVien + "', @HoTen ='" + HoTen + "', @GioiTinh ='" + GioiTinh + "', @NgaySinh ='" + NgaySinh + "' , @NoiSinh ='" + NoiSinh + "' , @DiaChi ='" + DiaChi + "', @DienThoai ='" + DienThoai + "' ");
+            DataProvider.Instance.ExecuteQuery("usp_AddTeacher @MaGiaoVien = '" + MaGiaoVien + "', @HoTen =N'" + HoTen + "', @GioiTinh ='" + GioiTinh + "', @NgaySinh ='" + NgaySinh + "' , @NoiSinh =N'" + NoiSinh + "' , @DiaChi =N'" + DiaChi + "', @DienThoai ='" + DienThoai + "' ");
             string mk = "1";
             AdNewUser(MaGiaoVien, mk);
         }
 
         public void EditTeacher(string MaGiaoVien, string HoTen, bool GioiTinh, DateTime NgaySinh, string NoiSinh, string DiaChi, string DienThoai)
         {
-            DataProvider.Instance.ExecuteQuery("usp_EditTeacher @MaGiaoVien = '" + MaGiaoVien + "', @HoTen ='" + HoTen + "', @GioiTinh ='" + GioiTinh + "', @NgaySinh ='" + NgaySinh + "' , @NoiSinh ='" + NoiSinh + "' , @DiaChi ='" + DiaChi + "', @DienThoai ='" + DienThoai + "' ");
+            DataProvider.Instance.ExecuteQuery("usp_UpdateTeacher @MaGiaoVien = '" + MaGiaoVien + "', @HoTen =N'" + HoTen + "', @GioiTinh ='" + GioiTinh + "', @NgaySinh ='" + NgaySinh + "' , @NoiSinh =N'" + NoiSinh + "' , @DiaChi =N'" + DiaChi + "', @DienThoai ='" + DienThoai + "' ");
         }
 
         public void DeleteTeacher(string MaGiaoVien)
@@ -185,7 +185,7 @@ namespace QuanLyHocSinh.DAO
 
         public void EditTeacherOfClass(string MaGiaoVienLop, string MaGiaoVien, string MaLop, string MaNamHoc)
         {
-            DataProvider.Instance.ExecuteQuery("usp_EditTeacherOfStudent @MaGiaoVienLop = '" + MaGiaoVienLop + "', @MaGiaoVien ='" + MaGiaoVien + "' , @MaLop ='" + MaLop + "', @MaNamHoc ='" + MaNamHoc + "' ");
+            DataProvider.Instance.ExecuteQuery("usp_UpdateTeacherOfClass @MaGiaoVienLop = '" + MaGiaoVienLop + "', @MaGiaoVien ='" + MaGiaoVien + "' , @MaLop ='" + MaLop + "', @MaNamHoc ='" + MaNamHoc + "' ");
         }
 
         public void DeleteTeacherOfClass(string MaGiaoVienLop)

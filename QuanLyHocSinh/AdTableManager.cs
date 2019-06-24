@@ -249,7 +249,7 @@ namespace QuanLyHocSinh
             string dt = textNumber.Text;
 
             AdminDAO.Instance.EditTeacher(ma, name, tam, sn, ns, dc, dt);
-            MessageBox.Show("Thêm thành công!", "Thông báo");
+            MessageBox.Show("Sửa thành công!", "Thông báo");
 
         }
 
@@ -257,7 +257,7 @@ namespace QuanLyHocSinh
         {
             string ma = textMGV.Text;
             AdminDAO.Instance.DeleteTeacher(ma);
-            MessageBox.Show("Thêm thành công!", "Thông báo");
+            MessageBox.Show("Xóa thành công!", "Thông báo");
         }
 
 
@@ -277,8 +277,8 @@ namespace QuanLyHocSinh
             DateTime sn = DateTime.Parse(textDateS.Text);
             string que = textQue.Text;
             string dc = textAddS.Text;
-            string dt = (string)cbbNation.SelectedValue;
-            string tg = (string)cbbReligion.SelectedValue;
+            string dt = cbbNation.Text;
+            string tg = cbbReligion.Text;
             string nt = txbParentName.Text;
             AdminDAO.Instance.SaveInfor(ms, name, tam, sn, que, dc, dt, tg, nt);
 
@@ -298,8 +298,8 @@ namespace QuanLyHocSinh
             DateTime sn = DateTime.Parse(textDateS.Text);
             string que = textQue.Text;
             string dc = textAddS.Text;
-            string dt = (string)cbbNation.SelectedValue;
-            string tg = (string)cbbReligion.SelectedValue;
+            string dt = cbbNation.Text;
+            string tg = cbbReligion.Text;
             string nt = txbParentName.Text;
             UpdateInforDAO.Instance.UpdateInfor(ms, name, tam, sn, que, dc, dt, tg, nt);
         }

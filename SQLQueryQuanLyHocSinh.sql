@@ -175,9 +175,7 @@ CREATE TABLE MON_HOC
  ALTER TABLE HOC_SINH_LOP ADD FOREIGN KEY (MaLop, MaNamHoc) REFERENCES LOP(MaLop, MaNamHoc);
  ALTER TABLE HOC_SINH_LOP ADD FOREIGN KEY (MaNamHoc) REFERENCES NAM_HOC(MaNamHoc);
  ALTER TABLE GIAO_VIEN_LOP ADD FOREIGN KEY (MaGiaoVien) REFERENCES GIAO_VIEN(MaGiaoVien);
-
  ALTER TABLE GIAO_VIEN_LOP ADD FOREIGN KEY (MaLop, MaNamHoc) REFERENCES LOP(MaLop, MaNamHoc);
-
  ALTER TABLE PHAN_CONG  ADD FOREIGN KEY (MaGiaoVienLop) REFERENCES GIAO_VIEN_LOP(MaGiaoVienLop);
  ALTER TABLE PHAN_CONG ADD FOREIGN KEY (MaMonHoc) REFERENCES MON_HOC(MaMonHoc);
  ALTER TABLE LOP ADD FOREIGN KEY (MaGiaoVienCN) REFERENCES GIAO_VIEN (MaGiaoVien);
@@ -273,11 +271,8 @@ CREATE TABLE MON_HOC
 	
  INSERT INTO  GIAO_VIEN_LOP (MaGiaoVienLop,MaGiaoVien,MaLop, MaNamHoc) VALUES
     (N'T12A101', N'T011001', N'K12A1', '019'), 
-
 	(N'T11A101', N'T011001', N'K11A1', '018'),
-	 
 	(N'T11A202', N'T011001', N'K10A1', '017'),
-
 	(N'T10A201', N'T008002',N'K11A1', '019');
 
  INSERT INTO  PHAN_CONG (MaPhanCong,MaGiaoVienLop,MaMonHoc) VALUES
@@ -285,11 +280,11 @@ CREATE TABLE MON_HOC
     (N'P11A2T1', N'T11A101',N'TA');
 
  INSERT INTO  NGUOI_DUNG(MaNguoiDung,MatKhau) VALUES
-    (N'Admin', N'1'), 
-	(N'S017001', N'1'),
-	(N'S018002', N'1'), 
-    (N'T011001', N'1'),
-	(N'T008002', N'1');
+    (N'Admin', N'Admin'), 
+	(N'S017001', N'S017001'),
+	(N'S018002', N'S018002'), 
+    (N'T011001', N'T011001'),
+	(N'T008002', N'T008002');
 
 INSERT INTO KQ_HOC_KY (MaHocSinhLop,	MaHocKi,	MaNamHoc,	MaHocLuc,	MaHanhKiem,	DTBHK) VALUES
 ('S10A101',	'1',	'017',	'TB',	'T',	6),
@@ -353,6 +348,8 @@ INSERT INTO KQ_NAM_HOC (MaHocSinhLop,	MaHocLuc,	MaHanhKiem,	MaNamHoc,	DTBCaNam) 
 -------------------------------------------------------------------------------------------------------------------------------------
 
 --Truy vấn lấy thông tin học sinh ra để load vào table tại fStudentInformation với thông tin đầy đủ
+
+
 GO
 CREATE PROC	usp_GetStudentInformationByStudentCode @MaHocSinh varchar(50)
 AS
@@ -387,29 +384,17 @@ BEGIN
 	UPDATE HOC_SINH SET HoTen = @HoTen, NgaySinh = @NgaySinh, GioiTinh = @GioiTinh, NoiSinh = @QueQuan, DiaChi = @DiaChi, DanToc = @DanToc, TonGiao = @TonGiao, TenNguoiThan = @NguoiThan WHERE MaHocSinh = @MaHocSinh
 END
 
-
---Thêm một học sinh mới
-CREATE PROC usp_AddNewStudent @TenHocSinh nvarchar(50), @MaHocSinh nvarchar(50), @TenLop nvarchar(50), @MaHocSinhLop nvarchar(50)
-AS
-BEGIN
-	 INSERT INTO HOC_SINH (MaHocSinh, HoTen, GioiTinh, NgaySinh, NoiSinh, DiaChi, DanToc, TonGiao, TenNguoiThan) VALUES
-     (@MaHocSinh, @TenHocSinh, null,null, null, null, null, null, null);
-
-	 EXEC usp_AddClassStudent @MaHocSinhLop, @MaHocSinh, @TenLop
-
-	 EXEC usp_AddAccountStudent @MaHocSinh
-
-END
-
-
+/*
+-----------------------------------------------------------------------------------------------------------------
 --Hàm phụ, lấy ra Mã lớp học từ bảng LOP_HOP để nhập cho MaHocSinhLop bảng HOC_SINH_LOP
 CREATE PROC usp_GetIDClassStudent @TenLop nvarchar(50), @MaLopHoc nvarchar(50) out
 AS
-BEGIN
-	  SELECT @MaLopHoc=MaLop FROM LOP WHERE TenLop = @TenLop
-END
-
-
+--BEGIN
+	  SELECT MaLop = @MaLopHoc FROM LOP WHERE TenLop = '12A1'
+	  SET @MaLopHoc = 'k12a1'
+--END
+-----------------------------------------------------------------------------------------------------------------
+*/
 --Cập nhật tên đăng nhập và mật khẩu cho học sinh mới thêm
 CREATE PROC usp_AddAccountStudent @MaHocSinh nvarchar(50)
 AS
@@ -420,15 +405,308 @@ END
 
 
 --Cập nhật lớp cho học sinh mới thêm
-CREATE PROC usp_AddClassStudent @MaHocSinhLop nvarchar(50), @MaHocSinh nvarchar(50), @TenLop nvarchar(50)
+CREATE PROC usp_AddClassStudent @MaHocSinhLop nvarchar(50), @MaHocSinh nvarchar(50), @TenLop nvarchar(50), @MaNamHoc nvarchar(50)
 AS
 BEGIN
 	DECLARE @MaLop nvarchar(50)
-	EXEC usp_GetIDClassStudent @Tenlop, @MaLop
-
-	INSERT INTO  HOC_SINH_LOP (MaHocSinhLop,MaHocSinh,MaLop) VALUES
-    (@MaHocSinhLop, @MaHocSinh, @MaLop);
+	--EXEC usp_GetIDClassStudent @Tenlop, @MaLop
+	SET @MaLop = N'K12A1'
+	INSERT INTO  HOC_SINH_LOP (MaHocSinhLop,MaHocSinh,MaLop, MaNamHoc) VALUES
+    (@MaHocSinhLop, @MaHocSinh, @MaLop, @MaNamHoc);
 END
+
+
+--Cập nhật bảng điểm cho học sinh mới được thêm
+CREATE PROC usp_AddScoreStudent @MaHocSinhLop nvarchar(50), @MaNamHoc nvarchar(50)
+AS
+BEGIN
+	INSERT INTO  DIEM (MaMonHoc,MaHocSinhLop,MaHocKi, MaNamHoc, MaLoai, Diem) VALUES
+    ('TO', @MaHocSinhLop, '1', @MaNamHoc, N'Miệng', null),
+	('TO', @MaHocSinhLop, '1', @MaNamHoc, '15p', null),
+	('TO', @MaHocSinhLop, '1', @MaNamHoc, '1T', null),
+	('TO', @MaHocSinhLop, '1', @MaNamHoc, 'HK', null),
+	('HO', @MaHocSinhLop, '1', @MaNamHoc, N'Miệng', null),
+	('HO', @MaHocSinhLop, '1', @MaNamHoc, '15p', null),
+	('HO', @MaHocSinhLop, '1', @MaNamHoc, '1T', null),
+	('HO', @MaHocSinhLop, '1', @MaNamHoc, 'HK', null),
+    ('TA', @MaHocSinhLop, '1', @MaNamHoc, N'Miệng', null),
+	('TA', @MaHocSinhLop, '1', @MaNamHoc, '15p', null),
+	('TA', @MaHocSinhLop, '1', @MaNamHoc, '1T', null),
+	('TA', @MaHocSinhLop, '1', @MaNamHoc, 'HK', null),
+	('LI', @MaHocSinhLop, '1', @MaNamHoc, N'Miệng', null),
+	('LI', @MaHocSinhLop, '1', @MaNamHoc, '15p', null),
+	('LI', @MaHocSinhLop, '1', @MaNamHoc, '1T', null),
+	('LI', @MaHocSinhLop, '1', @MaNamHoc, 'HK', null),
+	('VA', @MaHocSinhLop, '1', @MaNamHoc, N'Miệng', null),
+	('VA', @MaHocSinhLop, '1', @MaNamHoc, '15p', null),
+	('VA', @MaHocSinhLop, '1', @MaNamHoc, '1T', null),
+	('VA', @MaHocSinhLop, '1', @MaNamHoc, 'HK', null),
+	
+	('TO', @MaHocSinhLop, '2', @MaNamHoc, N'Miệng', null),
+	('TO', @MaHocSinhLop, '2', @MaNamHoc, '15p', null),
+	('TO', @MaHocSinhLop, '2', @MaNamHoc, '1T', null),
+	('TO', @MaHocSinhLop, '2', @MaNamHoc, 'HK', null),
+	('HO', @MaHocSinhLop, '2', @MaNamHoc, N'Miệng', null),
+	('HO', @MaHocSinhLop, '2', @MaNamHoc, '15p', null),
+	('HO', @MaHocSinhLop, '2', @MaNamHoc, '1T', null),
+	('HO', @MaHocSinhLop, '2', @MaNamHoc, 'HK', null),
+    ('TA', @MaHocSinhLop, '2', @MaNamHoc, N'Miệng', null),
+	('TA', @MaHocSinhLop, '2', @MaNamHoc, '15p', null),
+	('TA', @MaHocSinhLop, '2', @MaNamHoc, '1T', null),
+	('TA', @MaHocSinhLop, '2', @MaNamHoc, 'HK', null),
+	('LI', @MaHocSinhLop, '2', @MaNamHoc, N'Miệng', null),
+	('LI', @MaHocSinhLop, '2', @MaNamHoc, '15p', null),
+	('LI', @MaHocSinhLop, '2', @MaNamHoc, '1T', null),
+	('LI', @MaHocSinhLop, '2', @MaNamHoc, 'HK', null),
+	('VA', @MaHocSinhLop, '2', @MaNamHoc, N'Miệng', null),
+	('VA', @MaHocSinhLop, '2', @MaNamHoc, '15p', null),
+	('VA', @MaHocSinhLop, '2', @MaNamHoc, '1T', null),
+	('VA', @MaHocSinhLop, '2', @MaNamHoc, 'HK', null);
+END
+
+--Cập nhật điểm học kỳ cho học sinh mới được thêm
+CREATE PROC usp_AddTermScoreStudent @MaHocSinhLop nvarchar(50), @MaNamHoc nvarchar(50)
+AS
+BEGIN
+	INSERT INTO  KQ_HOC_KY(MaHocSinhLop,MaHocKi, MaNamHoc, MaHocLuc, MaHanhKiem, DTBHK) VALUES
+	(@MaHocSinhLop, '1', @MaNamHoc, null, null, null),
+	(@MaHocSinhLop, '2', @MaNamHoc, null, null, null);
+END
+
+--Cập nhật điểm môn học cho học sinh mới được thêm
+CREATE PROC usp_AddSubjectScoreStudent @MaHocSinhLop nvarchar(50), @MaNamHoc nvarchar(50)
+AS
+BEGIN
+	INSERT INTO  KQ_MON_HOC(MaHocSinhLop,MaMonHoc, MaHocKi, MaNamHoc, DTBMonHoc) VALUES
+	(@MaHocSinhLop, 'TO', '1', @MaNamHoc, null),
+	(@MaHocSinhLop, 'HO', '1', @MaNamHoc, null),
+	(@MaHocSinhLop, 'TA', '1', @MaNamHoc, null),
+	(@MaHocSinhLop, 'LI', '1', @MaNamHoc, null),
+	(@MaHocSinhLop, 'VA', '1', @MaNamHoc, null),
+	(@MaHocSinhLop, 'TO', '2', @MaNamHoc, null),
+	(@MaHocSinhLop, 'HO', '2', @MaNamHoc, null),
+	(@MaHocSinhLop, 'TA', '2', @MaNamHoc, null),
+	(@MaHocSinhLop, 'LI', '2', @MaNamHoc, null),
+	(@MaHocSinhLop, 'VA', '2', @MaNamHoc, null);
+END
+
+--Cập nhật điểm trung bình của cả năm học cho học sinh mới được thêm
+CREATE PROC usp_AddAcademicScoreStudent @MaHocSinhLop nvarchar(50), @MaNamHoc nvarchar(50)
+AS
+BEGIN
+	INSERT INTO  KQ_NAM_HOC(MaHocSinhLop,MaHocLuc, MaHanhKiem, MaNamHoc, DTBCaNam) VALUES
+	(@MaHocSinhLop, null, null, @MaNamHoc, null);
+END
+
+--Lấy ra danh sách học sinh
+CREATE PROC usp_GetListStudent @TenLop nvarchar(50), @MaNamHoc nvarchar(50)
+AS
+BEGIN
+	SELECT HS.MaHocSinh AS N'Mã học sinh', HS.HoTen N'Họ tên học sinh'
+	FROM HOC_SINH_LOP HSL, HOC_SINH HS, LOP
+	WHERE HSL.MaHocSinh = HS.MaHocSinh AND HSL.MaLop = LOP.MaLop AND LOP.TenLop = @TenLop AND HSL.MaNamHoc = @MaNamHoc
+END
+
+--Lấy điểm chi tiết từng môn học cho bảng giáo viên của học sinh được chọn
+CREATE PROC usp_GetScoreStudentForTeacher @MaHocSinh nvarchar(50), @MaNamHoc nvarchar(50), @MaHocKy nvarchar(50)
+AS
+BEGIN
+	SELECT DIEM.Diem
+	FROM DIEM, HOC_SINH_LOP HSL
+	WHERE DIEM.MaHocSinhLop = HSL.MaHocSinhLop AND HSL.MaHocSinh = @MaHocSinh AND DIEM.MaHocKi = @MaHocKy AND DIEM.MaNamHoc = @MaNamHoc
+END
+
+--Lấy tên hạnh kiểm của học sinh được chọn
+CREATE PROC usp_GetConductStudent @MaHocSinh nvarchar(50), @MaHocKy nvarchar(50), @MaNamHoc nvarchar(50)
+AS
+BEGIN
+	SELECT DISTINCT HK.TenHanhKiem
+	FROM HOC_SINH_LOP HSL, KQ_HOC_KY KQHK, HANH_KIEM HK
+	WHERE HSL.MaHocSinhLop = KQHK.MaHocSinhLop AND HSL.MaHocSinh = @MaHocSinh AND KQHK.MaHocKi = @MaHocKy AND KQHK.MaNamHoc = @MaNamHoc AND KQHK.MaHanhKiem = HK.MaHanhKiem
+END
+
+--Thêm một học sinh mới
+CREATE PROC usp_AddNewStudent
+@TenHocSinh nvarchar(50), @MaHocSinh nvarchar(50), @TenLop nvarchar(50), @MaHocSinhLop nvarchar(50), @MaNamHoc nvarchar(50), @MaHocKy nvarchar(50)
+AS
+BEGIN
+	 INSERT INTO HOC_SINH (MaHocSinh, HoTen, GioiTinh, NgaySinh, NoiSinh, DiaChi, DanToc, TonGiao, TenNguoiThan) VALUES
+     (@MaHocSinh, @TenHocSinh, null,null, null, null, null, null, null);
+
+	 EXEC usp_AddClassStudent @MaHocSinhLop, @MaHocSinh, @TenLop, @MaNamHoc
+
+	 EXEC usp_AddAccountStudent @MaHocSinh
+
+	 EXEC usp_AddScoreStudent @MaHocSinhLop, @MaNamHoc
+
+	 EXEC usp_AddTermScoreStudent @MaHocSinhLop, @MaNamHoc
+
+	 EXEC usp_AddSubjectScoreStudent @MaHocSinhLop, @MaNamHoc
+
+	 EXEC usp_AddAcademicScoreStudent @MaHocSinhLop, @MaNamHoc
+END
+
+
+--Cập nhật bảng điểm chi tiết cho học sinh
+CREATE PROC usp_EditScoreStudent
+@MaHocSinhLop nvarchar(50), @MaNamHoc nvarchar(50), @HocKi nvarchar(50),
+@TOMieng float, @TO15p float, @TO1T float, @TOHK float,
+@HOMieng float, @HO15p float, @HO1T float, @HOHK float,
+@TAMieng float, @TA15p float, @TA1T float, @TAHK float,
+@LIMieng float, @LI15p float, @LI1T float, @LIHK float,
+@VAMieng float, @VA15p float, @VA1T float, @VAHK float
+AS
+BEGIN
+	UPDATE  DIEM SET
+    Diem =  @TOMieng
+	WHERE MaMonHoc = 'TO' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = N'Miệng';
+	UPDATE  DIEM SET
+	Diem =  @TO15p
+	WHERE MaMonHoc = 'TO' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = '15p';
+	UPDATE  DIEM SET
+	Diem =  @TO1T
+	WHERE MaMonHoc = 'TO' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = '1T';
+	UPDATE  DIEM SET
+	Diem =  @TOHK
+	WHERE MaMonHoc = 'TO' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = 'HK';
+	UPDATE  DIEM SET
+    Diem =  @HOMieng
+	WHERE MaMonHoc = 'HO' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = N'Miệng';
+	UPDATE  DIEM SET
+	Diem =  @HO15p
+	WHERE MaMonHoc = 'HO' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = '15p';
+	UPDATE  DIEM SET
+	Diem =  @HO1T
+	WHERE MaMonHoc = 'HO' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = '1T';
+	UPDATE  DIEM SET
+	Diem =  @HOHK
+	WHERE MaMonHoc = 'HO' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = 'HK';
+	UPDATE  DIEM SET
+    Diem =  @TAMieng
+	WHERE MaMonHoc = 'TA' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = N'Miệng';
+	UPDATE  DIEM SET
+	Diem =  @TA15p
+	WHERE MaMonHoc = 'TA' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = '15p';
+	UPDATE  DIEM SET
+	Diem =  @TA1T
+	WHERE MaMonHoc = 'TA' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = '1T';
+	UPDATE  DIEM SET
+	Diem =  @TAHK
+	WHERE MaMonHoc = 'TA' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = 'HK';
+	UPDATE  DIEM SET
+    Diem =  @LIMieng 
+	WHERE MaMonHoc = 'LI' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = N'Miệng';
+	UPDATE  DIEM SET
+	Diem =  @LI15p
+	WHERE MaMonHoc = 'LI' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = '15p';
+	UPDATE  DIEM SET
+	Diem =  @LI1T
+	WHERE MaMonHoc = 'LI' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = '1T';
+	UPDATE  DIEM SET
+	Diem =  @LIHK
+	WHERE MaMonHoc = 'LI' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = 'HK';
+	UPDATE  DIEM SET
+    Diem =  @VAMieng
+	WHERE MaMonHoc = 'VA' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = N'Miệng';
+	UPDATE  DIEM SET
+	Diem =  @VA15p
+	WHERE MaMonHoc = 'VA' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = '15p';
+	UPDATE  DIEM SET
+	Diem =  @VA1T 
+	WHERE MaMonHoc = 'VA' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = '1T';
+	UPDATE  DIEM SET
+	Diem =  @VAHK
+	WHERE MaMonHoc = 'VA' AND MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @HocKi AND MaNamHoc = @MaNamHoc AND MaLoai = 'HK';
+END
+
+--Cập nhật điểm môn học cho học sinh
+CREATE PROC usp_EditSubjectScoreStudent
+@MaHocSinhLop nvarchar(50), @MaNamHoc nvarchar(50), @MaHocKi nvarchar(50),
+@TO float, @HO float, @TA float, @LI float, @VA float
+AS
+BEGIN
+	UPDATE KQ_MON_HOC SET
+	DTBMonHoc = @TO
+	WHERE MaHocSinhLop = @MaHocSinhLop AND MaMonHoc = 'TO' AND MaHocKi = @MaHocKi AND MaNamHoc = @MaNamHoc;
+	UPDATE KQ_MON_HOC SET
+	DTBMonHoc = @HO
+	WHERE MaHocSinhLop = @MaHocSinhLop AND MaMonHoc = 'HO' AND MaHocKi = @MaHocKi AND MaNamHoc = @MaNamHoc;
+	UPDATE KQ_MON_HOC SET
+	DTBMonHoc = @TA
+	WHERE MaHocSinhLop = @MaHocSinhLop AND MaMonHoc = 'TA' AND MaHocKi = @MaHocKi AND MaNamHoc = @MaNamHoc;
+	UPDATE KQ_MON_HOC SET
+	DTBMonHoc = @LI
+	WHERE MaHocSinhLop = @MaHocSinhLop AND MaMonHoc = 'LI' AND MaHocKi = @MaHocKi AND MaNamHoc = @MaNamHoc;
+	UPDATE KQ_MON_HOC SET
+	DTBMonHoc = @VA
+	WHERE MaHocSinhLop = @MaHocSinhLop AND MaMonHoc = 'VA' AND MaHocKi = @MaHocKi AND MaNamHoc = @MaNamHoc;
+END
+
+--Cập nhật điểm học kỳ cho học sinh
+CREATE PROC usp_EditTermScoreStudent
+@MaHocSinhLop nvarchar(50), @MaNamHoc nvarchar(50), @MaHocKi nvarchar(50), @Score float, @MaHocLuc nvarchar(50), @MaHanhKiem nvarchar(50)
+AS
+BEGIN
+	UPDATE KQ_HOC_KY SET
+	DTBHK = @Score, MaHocLuc = @MaHocLuc, MaHanhKiem = @MaHanhKiem
+	WHERE MaHocSinhLop = @MaHocSinhLop AND MaHocKi = @MaHocKi AND MaNamHoc = @MaNamHoc;
+END
+
+--Cập nhật điểm nawm học cho học sinh
+CREATE PROC usp_EditAcademicScoreStudent
+@MaHocSinhLop nvarchar(50), @MaNamHoc nvarchar(50), @Score float, @MaHocLuc nvarchar(50), @MaHanhKiem nvarchar(50)
+AS
+BEGIN
+	UPDATE KQ_NAM_HOC SET
+	DTBCaNam = @Score, MaHocLuc = @MaHocLuc, MaHanhKiem = @MaHanhKiem
+	WHERE MaHocSinhLop = @MaHocSinhLop AND MaNamHoc = @MaNamHoc;
+END
+
+
+
+--Lấy ra mã học sinh lớp lớn nhất để tự động tạo mã học sinh lớp cho học sinh mới được thêm
+CREATE PROC usp_GetClassStu
+@MaLop nvarchar(50), @MaNamHoc nvarchar(50)
+AS
+BEGIN
+	SELECT TOP 1 MaHocSinhLop
+	FROM HOC_SINH_LOP
+	WHERE MaNamHoc = @MaNamHoc AND MaLop = @MaLop
+	ORDER BY MaHocSinhLop DESC
+END
+
+
+--Lấy ra mã học sinh lớn nhất để tự động tạo mã học sinh cho học sinh mới được thêm
+CREATE PROC usp_GetCodeStu
+@MaLop nvarchar(50), @MaNamHoc nvarchar(50)
+AS
+BEGIN
+	SELECT TOP 1 MaHocSinh
+	FROM HOC_SINH_LOP
+	WHERE MaNamHoc = @MaNamHoc AND MaLop = @MaLop
+	ORDER BY MaHocSinh DESC
+END
+
+--Lấy ra mã học sinh lớp của một học sinh nhập vào
+CREATE PROC usp_GetCodeStudent @MaHocSinh nvarchar(50), @MaNamHoc nvarchar(50), @MaLop nvarchar(50)
+AS
+BEGIN
+	SELECT MaHocSinhLop
+	FROM HOC_SINH_LOP
+	WHERE MaHocSinh = @MaHocSinh AND MaNamHoc = @MaNamHoc AND MaLop = @MaLop
+END
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -552,8 +830,8 @@ CREATE PROC usp_AddStudentAm
 @DanToc nvarchar(50), @TonGiao nvarchar(50), @NguoiThan nvarchar(50)
 AS
 BEGIN
-	INSERT INTO HOC_SINH ( MaHocSinh,HoTen,NgaySinh, GioiTinh,  NoiSinh, DiaChi , DanToc, TonGiao , TenNguoiThan)VALUES
-	( @HoTen,  @NgaySinh,@GioiTinh,@QueQuan, @DiaChi, @DanToc, @TonGiao, @NguoiThan,@MaHocSinh)
+	INSERT INTO HOC_SINH ( MaHocSinh, HoTen, NgaySinh, GioiTinh,  NoiSinh, DiaChi , DanToc, TonGiao , TenNguoiThan)VALUES
+						(@MaHocSinh, @HoTen,  @NgaySinh, @GioiTinh, @QueQuan, @DiaChi, @DanToc, @TonGiao, @NguoiThan)
 END
 
 -- Xóa điểm của một học sinh
@@ -561,7 +839,6 @@ GO
 CREATE PROC usp_DeletePointAm @MaHocSinhLop nvarchar(50)
 AS
 BEGIN
-
 	 DELETE FROM DIEM WHERE MaHocSinhLop = @MaHocSinhLop
 END
 
@@ -570,7 +847,6 @@ GO
 CREATE PROC usp_DeletePointSubjectAm @MaHocSinhLop nvarchar(50)
 AS
 BEGIN
-
 	 DELETE FROM KQ_MON_HOC WHERE MaHocSinhLop = @MaHocSinhLop
 END
 
@@ -579,7 +855,6 @@ GO
 CREATE PROC usp_DeletePointHKAm @MaHocSinhLop nvarchar(50)
 AS
 BEGIN
-
 	 DELETE FROM KQ_HOC_KY WHERE MaHocSinhLop = @MaHocSinhLop
 END
 
@@ -620,6 +895,5 @@ DECLARE @MaNguoiDung nvarchar(50)
     SELECT @MaHocSinhLop=MaHocSinhLop FROM HOC_SINH_LOP WHERE MaHocSinh = @MaHocSinh
 	EXEC usp_DeleteStudentClassAm @MaNguoiDung
 
-	 DELETE FROM HOC_SING WHERE MaHocSinh = @MaHocSinh
+	 DELETE FROM HOC_SINH WHERE MaHocSinh = @MaHocSinh
 END
-
